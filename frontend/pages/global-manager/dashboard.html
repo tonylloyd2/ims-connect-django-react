@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Innovation Manager Dashboard - IMS Connect</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../assets/css/style.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-light">
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="#">Global Innovation Portal</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="dashboard.html">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="global-ideas.html">Global Ideas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="cross-regional.html">Cross-Regional</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="analytics.html">Analytics</a>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center">
+                    <div class="dropdown">
+                        <button class="btn btn-light dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown">
+                            <i class="fas fa-user-tie me-2"></i>Global Manager
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="profile.html">Profile</a></li>
+                            <li><a class="dropdown-item" href="#" id="logoutBtn">Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mt-4">
+        <!-- Global Statistics -->
+        <div class="row g-4 mb-4">
+            <div class="col-md-3">
+                <div class="card bg-primary text-white">
+                    <div class="card-body">
+                        <h5 class="card-title">Total Ideas</h5>
+                        <h2 class="card-text" id="totalIdeasCount">1,245</h2>
+                        <small>Across all regions</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card bg-success text-white">
+                    <div class="card-body">
+                        <h5 class="card-title">Implementation Rate</h5>
+                        <h2 class="card-text" id="implementationRate">68%</h2>
+                        <small>Global average</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card bg-info text-white">
+                    <div class="card-body">
+                        <h5 class="card-title">Active Regions</h5>
+                        <h2 class="card-text" id="activeRegionsCount">4</h2>
+                        <small>Contributing regions</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card bg-warning text-white">
+                    <div class="card-body">
+                        <h5 class="card-title">Global ROI</h5>
+                        <h2 class="card-text" id="globalROI">$2.5M</h2>
+                        <small>Estimated impact</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Global Map and Trends -->
+        <div class="row mb-4">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">Global Innovation Heat Map</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="globalMap" style="height: 400px;">
+                            <!-- Map will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">Regional Performance</h5>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="regionalPerformanceChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cross-Regional Projects -->
+        <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Cross-Regional Projects</h5>
+                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#newProjectModal">
+                    <i class="fas fa-plus me-2"></i>New Project
+                </button>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Project Name</th>
+                                <th>Regions Involved</th>
+                                <th>Status</th>
+                                <th>Progress</th>
+                                <th>Impact Score</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="crossRegionalTable">
+                            <!-- Dynamic content will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Innovation Metrics -->
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">Innovation Categories</h5>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="categoriesChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">Implementation Timeline</h5>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="timelineChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- New Project Modal -->
+    <div class="modal fade" id="newProjectModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Create Cross-Regional Project</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="newProjectForm">
+                        <div class="mb-3">
+                            <label class="form-label">Project Name</label>
+                            <input type="text" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Regions</label>
+                            <select class="form-select" multiple required>
+                                <option value="north">North</option>
+                                <option value="south">South</option>
+                                <option value="east">East</option>
+                                <option value="west">West</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Description</label>
+                            <textarea class="form-control" rows="3" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Expected Timeline</label>
+                            <input type="date" class="form-control" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Create Project</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../assets/js/main.js"></script>
+    <script>
+        $(document).ready(function() {
+            initializeCharts();
+            loadCrossRegionalProjects();
+            updateGlobalStatistics();
+        });
+
+        function initializeCharts() {
+            // Regional Performance Chart
+            const regionalCtx = document.getElementById('regionalPerformanceChart').getContext('2d');
+            new Chart(regionalCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['North', 'South', 'East', 'West'],
+                    datasets: [{
+                        label: 'Ideas Implemented',
+                        data: [65, 45, 55, 40],
+                        backgroundColor: '#4361ee'
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                }
+            });
+
+            // Categories Chart
+            const categoriesCtx = document.getElementById('categoriesChart').getContext('2d');
+            new Chart(categoriesCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Technology', 'Process', 'Product', 'Service', 'Other'],
+                    datasets: [{
+                        data: [30, 25, 20, 15, 10],
+                        backgroundColor: [
+                            '#4361ee',
+                            '#3a0ca3',
+                            '#7209b7',
+                            '#f72585',
+                            '#4cc9f0'
+                        ]
+                    }]
+                }
+            });
+
+            // Timeline Chart
+            const timelineCtx = document.getElementById('timelineChart').getContext('2d');
+            new Chart(timelineCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                    datasets: [{
+                        label: 'Implementations',
+                        data: [12, 19, 15, 25, 22, 30],
+                        borderColor: '#4361ee',
+                        tension: 0.1
+                    }]
+                }
+            });
+        }
+
+        function loadCrossRegionalProjects() {
+            // Simulated data - replace with actual API call
+            const projects = [
+                {
+                    name: "Global Digital Transformation",
+                    regions: "North, South, East",
+                    status: "In Progress",
+                    progress: 75,
+                    impact: "High"
+                },
+                // Add more projects...
+            ];
+
+            const tableBody = $('#crossRegionalTable');
+            projects.forEach(project => {
+                tableBody.append(`
+                    <tr>
+                        <td>${project.name}</td>
+                        <td>${project.regions}</td>
+                        <td><span class="badge bg-primary">${project.status}</span></td>
+                        <td>
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" style="width: ${project.progress}%"
+                                     aria-valuenow="${project.progress}" aria-valuemin="0" aria-valuemax="100">
+                                    ${project.progress}%
+                                </div>
+                            </div>
+                        </td>
+                        <td><span class="badge bg-success">${project.impact}</span></td>
+                        <td>
+                            <button class="btn btn-sm btn-primary">View</button>
+                            <button class="btn btn-sm btn-info">Edit</button>
+                        </td>
+                    </tr>
+                `);
+            });
+        }
+
+        function updateGlobalStatistics() {
+            // Update statistics with real data from API
+            $('#totalIdeasCount').text('1,245');
+            $('#implementationRate').text('68%');
+            $('#activeRegionsCount').text('4');
+            $('#globalROI').text('$2.5M');
+        }
+
+        // Handle new project form submission
+        $('#newProjectForm').on('submit', function(e) {
+            e.preventDefault();
+            // Handle form submission
+            alert('Project created successfully!');
+            $('#newProjectModal').modal('hide');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Dashboard - IMS Connect</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../assets/css/style.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="dashboard.html">IMS Connect</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="dashboard.html">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="my-ideas.html">My Ideas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="submit-idea.html">Submit Idea</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="team-collaboration.html">Team Collaboration</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="profile.html">Profile</a>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center">
+                    <a href="notifications.html" class="btn btn-light me-2 position-relative">
+                        <i class="fas fa-bell"></i>
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            3
+                            <span class="visually-hidden">unread notifications</span>
+                        </span>
+                    </a>
+                    <div class="dropdown">
+                        <button class="btn btn-light dropdown-toggle d-flex align-items-center" type="button" id="userDropdown" data-bs-toggle="dropdown">
+                            <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center me-2" 
+                                 style="width: 32px; height: 32px;" id="userAvatar">U</div>
+                            <span id="userName">User</span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="profile.html">Profile</a></li>
+                            <li><a class="dropdown-item" href="settings.html">Settings</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#" id="logoutBtn">Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mt-4">
+        <!-- Quick Actions -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Quick Actions</h5>
+                        <div class="d-flex gap-2">
+                            <a href="submit-idea.html" class="btn btn-primary">
+                                <i class="fas fa-plus-circle me-2"></i>Submit New Idea
+                            </a>
+                            <a href="team-collaboration.html" class="btn btn-outline-primary">
+                                <i class="fas fa-users me-2"></i>Join Team
+                            </a>
+                            <a href="#" class="btn btn-outline-primary">
+                                <i class="fas fa-search me-2"></i>Browse Ideas
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Statistics Cards -->
+        <div class="row g-4 mb-4">
+            <div class="col-md-3">
+                <div class="card bg-primary text-white">
+                    <div class="card-body">
+                        <h5 class="card-title">My Ideas</h5>
+                        <h2 class="card-text" id="myIdeasCount">5</h2>
+                        <small>Total Submissions</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card bg-success text-white">
+                    <div class="card-body">
+                        <h5 class="card-title">Approved</h5>
+                        <h2 class="card-text" id="approvedCount">2</h2>
+                        <small>Ideas Approved</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card bg-info text-white">
+                    <div class="card-body">
+                        <h5 class="card-title">Teams</h5>
+                        <h2 class="card-text" id="teamsCount">3</h2>
+                        <small>Active Teams</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card bg-warning text-white">
+                    <div class="card-body">
+                        <h5 class="card-title">Points</h5>
+                        <h2 class="card-text" id="pointsCount">150</h2>
+                        <small>Innovation Points</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- My Ideas Table -->
+        <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">My Ideas</h5>
+                <a href="submit-idea.html" class="btn btn-primary btn-sm">Submit New</a>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Category</th>
+                                <th>Status</th>
+                                <th>Votes</th>
+                                <th>Created</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="myIdeasTable">
+                            <!-- Dynamic content will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">Recent Activity</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="list-group list-group-flush" id="activityList">
+                            <!-- Dynamic content will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">Team Updates</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="list-group list-group-flush" id="teamUpdates">
+                            <!-- Dynamic content will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="../../assets/js/main.js"></script>
+    <script>
+        // API Configuration
+        const token = localStorage.getItem('access_token');
+        const userRole = localStorage.getItem('user_role');
+        
+        // Configure axios defaults
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
+        $(document).ready(function() {
+            // Check authentication
+            if (!token || userRole !== 'employee') {
+                window.location.href = '/index.html';
+                return;
+            }
+
+            // Load all dashboard data
+            loadMyIdeas();
+            loadRecentActivity();
+            loadTeamUpdates();
+            updateStatistics();
+            loadUserProfile();
+        });
+
+        function loadMyIdeas() {
+            const tableBody = $('#myIdeasTable');
+            tableBody.empty();
+
+            // Show loading state
+            tableBody.append(`
+                <tr>
+                    <td colspan="6" class="text-center">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </td>
+                </tr>
+            `);
+
+            axios.get('/api/ideas/my-ideas/')
+                .then(response => {
+                    console.log('My ideas response:', response.data);
+                    const ideas = response.data;
+                    tableBody.empty();
+                    
+                    if (!Array.isArray(ideas)) {
+                        console.error('Ideas response is not an array:', ideas);
+                        showAlert('Invalid response format from server', 'danger');
+                        return;
+                    }
+                    
+                    if (ideas.length === 0) {
+                        tableBody.append(`
+                            <tr>
+                                <td colspan="6" class="text-center">
+                                    <div class="alert alert-info mb-0">
+                                        No ideas submitted yet. 
+                                        <a href="submit-idea.html" class="alert-link">Submit your first idea!</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        `);
+                        $('#myIdeasCount').text('0');
+                        return;
+                    }
+
+                    // Update ideas count
+                    $('#myIdeasCount').text(ideas.length);
+                    console.log('Processing ideas:', ideas);
+
+                    ideas.forEach(idea => {
+                        console.log('Processing idea:', idea);
+                        const category = idea.category ? idea.category.name : 'Uncategorized';
+                        const status = idea.status || 'draft';
+                        const votesCount = idea.votes_count || 0;
+                        
+                        tableBody.append(`
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <i class="fas fa-lightbulb text-warning me-2"></i>
+                                        <div>
+                                            <div class="fw-bold">${idea.title || 'Untitled'}</div>
+                                            <small class="text-muted">${idea.description ? idea.description.substring(0, 50) + '...' : 'No description'}</small>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>${category}</td>
+                                <td><span class="badge bg-${getStatusBadgeColor(status)}">${status}</span></td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <i class="fas fa-thumbs-up me-1"></i>
+                                        ${votesCount}
+                                    </div>
+                                </td>
+                                <td>${formatDate(idea.created_at)}</td>
+                                <td>
+                                    <div class="btn-group">
+                                        <button class="btn btn-sm btn-outline-primary" onclick="editIdea(${idea.id})">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-info" onclick="viewIdea(${idea.id})">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        `);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error loading ideas:', error);
+                    console.error('Error details:', error.response?.data);
+                    const errorMessage = error.response?.data?.detail || 'Error loading ideas. Please try again later.';
+                    showAlert(errorMessage, 'danger');
+                    tableBody.empty();
+                    tableBody.append(`
+                        <tr>
+                            <td colspan="6" class="text-center">
+                                <div class="alert alert-danger mb-0">
+                                    <i class="fas fa-exclamation-circle me-2"></i>
+                                    Failed to load ideas. Please try refreshing the page.
+                                </div>
+                            </td>
+                        </tr>
+                    `);
+                    $('#myIdeasCount').text('-');
+                });
+        }
+
+        function loadRecentActivity() {
+            axios.get('/api/audit-logs/recent/')
+                .then(response => {
+                    const activities = response.data;
+                    const activityList = $('#activityList');
+                    activityList.empty();
+                    
+                    if (activities.length === 0) {
+                        activityList.append(`
+                            <div class="list-group-item">
+                                <p class="mb-1">No recent activities</p>
+                            </div>
+                        `);
+                        return;
+                    }
+
+                    activities.forEach(activity => {
+                        activityList.append(`
+                            <div class="list-group-item">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <p class="mb-1">${activity.description}</p>
+                                    <small>${formatTimeAgo(activity.created_at)}</small>
+                                </div>
+                            </div>
+                        `);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error loading activities:', error);
+                    $('#activityList').html('<div class="list-group-item">Error loading activities</div>');
+                });
+        }
+
+        function loadTeamUpdates() {
+            axios.get('/api/teams/updates/')
+                .then(response => {
+                    const updates = response.data;
+                    const updatesList = $('#teamUpdates');
+                    updatesList.empty();
+                    
+                    if (updates.length === 0) {
+                        updatesList.append(`
+                            <div class="list-group-item">
+                                <p class="mb-1">No team updates</p>
+                            </div>
+                        `);
+                        return;
+                    }
+
+                    updates.forEach(update => {
+                        updatesList.append(`
+                            <div class="list-group-item">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h6 class="mb-1">${update.team_name}</h6>
+                                    <small>${formatTimeAgo(update.created_at)}</small>
+                                </div>
+                                <p class="mb-1">${update.message}</p>
+                            </div>
+                        `);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error loading team updates:', error);
+                    $('#teamUpdates').html('<div class="list-group-item">Error loading team updates</div>');
+                });
+        }
+
+        function updateStatistics() {
+            axios.get('/api/users/statistics/')
+                .then(response => {
+                    const stats = response.data;
+                    $('#myIdeasCount').text(stats.ideas_count || 0);
+                    $('#approvedCount').text(stats.approved_ideas || 0);
+                    $('#teamsCount').text(stats.teams_count || 0);
+                    $('#pointsCount').text(stats.points || 0);
+                })
+                .catch(error => {
+                    console.error('Error loading statistics:', error);
+                    showAlert('Error loading statistics. Please try again later.', 'danger');
+                });
+        }
+
+        function loadUserProfile() {
+            axios.get('/api/users/profile/')
+                .then(response => {
+                    const user = response.data;
+                    $('#userDropdown').html(`
+                        <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center me-2" 
+                             style="width: 32px; height: 32px;" id="userAvatar">U</div>
+                        <span id="userName">${user.name}</span>
+                    `);
+                })
+                .catch(error => {
+                    console.error('Error loading user profile:', error);
+                    showAlert('Error loading profile. Please try again later.', 'danger');
+                });
+        }
+
+        // Utility functions
+        function getStatusBadgeColor(status) {
+            const colors = {
+                'Pending': 'warning',
+                'Approved': 'success',
+                'Rejected': 'danger',
+                'In Review': 'info'
+            };
+            return colors[status] || 'secondary';
+        }
+
+        function formatDate(dateString) {
+            return new Date(dateString).toLocaleDateString();
+        }
+
+        function formatTimeAgo(dateString) {
+            const date = new Date(dateString);
+            const now = new Date();
+            const diffInSeconds = Math.floor((now - date) / 1000);
+            
+            if (diffInSeconds < 60) return 'just now';
+            if (diffInSeconds < 3600) return `${Math.floor(diffInSeconds / 60)} minutes ago`;
+            if (diffInSeconds < 86400) return `${Math.floor(diffInSeconds / 3600)} hours ago`;
+            return `${Math.floor(diffInSeconds / 86400)} days ago`;
+        }
+
+        function showAlert(message, type) {
+            const alertHtml = `
+                <div class="alert alert-${type} alert-dismissible fade show" role="alert">
+                    ${message}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            `;
+            $('#alertContainer').html(alertHtml);
+        }
+
+        // Event handlers for idea actions
+        function editIdea(ideaId) {
+            // Implementation for editing an idea
+            $('#editIdeaModal').modal('show');
+            // Load idea details and populate form
+        }
+
+        function viewIdea(ideaId) {
+            // Implementation for viewing an idea
+            window.location.href = `view-idea.html?id=${ideaId}`;
+        }
+    </script>
+</body>
+</html>

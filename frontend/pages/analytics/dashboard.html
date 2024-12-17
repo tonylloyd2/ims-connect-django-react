@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics Dashboard - IMS Connect</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../assets/css/style.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- ApexCharts -->
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+</head>
+<body class="bg-light">
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="../../index.html">IMS Connect</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../employee/dashboard.html">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../ideas/submit.html">Submit Idea</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../collaboration/teams.html">Teams</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="dashboard.html">Analytics</a>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center">
+                    <div class="dropdown">
+                        <button class="btn btn-light dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown">
+                            <i class="fas fa-user me-2"></i><span id="userName">John Doe</span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="../profile/view.html">Profile</a></li>
+                            <li><a class="dropdown-item" href="../ideas/my-ideas.html">My Ideas</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#" id="logoutBtn">Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mt-4">
+        <!-- Date Range Filter -->
+        <div class="row mb-4">
+            <div class="col-md-8">
+                <div class="btn-group">
+                    <button class="btn btn-outline-primary active">Last 7 Days</button>
+                    <button class="btn btn-outline-primary">Last 30 Days</button>
+                    <button class="btn btn-outline-primary">Last Quarter</button>
+                    <button class="btn btn-outline-primary">Year to Date</button>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="input-group">
+                    <input type="date" class="form-control" id="startDate">
+                    <span class="input-group-text">to</span>
+                    <input type="date" class="form-control" id="endDate">
+                </div>
+            </div>
+        </div>
+
+        <!-- Key Metrics -->
+        <div class="row mb-4">
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h6 class="card-subtitle mb-2 text-muted">Total Ideas</h6>
+                        <div class="d-flex align-items-center">
+                            <h2 class="mb-0 me-2">324</h2>
+                            <small class="text-success">
+                                <i class="fas fa-arrow-up"></i> 12%
+                            </small>
+                        </div>
+                        <small class="text-muted">vs previous period</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h6 class="card-subtitle mb-2 text-muted">Implementation Rate</h6>
+                        <div class="d-flex align-items-center">
+                            <h2 class="mb-0 me-2">68%</h2>
+                            <small class="text-success">
+                                <i class="fas fa-arrow-up"></i> 5%
+                            </small>
+                        </div>
+                        <small class="text-muted">vs previous period</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h6 class="card-subtitle mb-2 text-muted">Active Teams</h6>
+                        <div class="d-flex align-items-center">
+                            <h2 class="mb-0 me-2">42</h2>
+                            <small class="text-success">
+                                <i class="fas fa-arrow-up"></i> 8%
+                            </small>
+                        </div>
+                        <small class="text-muted">vs previous period</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h6 class="card-subtitle mb-2 text-muted">Avg. Time to Implement</h6>
+                        <div class="d-flex align-items-center">
+                            <h2 class="mb-0 me-2">45d</h2>
+                            <small class="text-danger">
+                                <i class="fas fa-arrow-up"></i> 3d
+                            </small>
+                        </div>
+                        <small class="text-muted">vs previous period</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Row 1 -->
+        <div class="row mb-4">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Ideas Submission Trend</h5>
+                        <div class="btn-group">
+                            <button class="btn btn-outline-secondary btn-sm active">Daily</button>
+                            <button class="btn btn-outline-secondary btn-sm">Weekly</button>
+                            <button class="btn btn-outline-secondary btn-sm">Monthly</button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="submissionTrendChart" height="300"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">Ideas by Category</h5>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="categoryDistributionChart" height="300"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Row 2 -->
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">Implementation Status</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="implementationStatusChart" style="height: 300px;"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">Department Participation</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="departmentParticipationChart" style="height: 300px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Top Contributors and Impact -->
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">Top Contributors</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="list-group">
+                            <a href="#" class="list-group-item list-group-item-action">
+                                <div class="d-flex w-100 justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="mb-1">Sarah Johnson</h6>
+                                        <small>Process Innovation Team</small>
+                                    </div>
+                                    <div class="text-end">
+                                        <h6 class="mb-0">15 Ideas</h6>
+                                        <small class="text-success">80% Implementation Rate</small>
+                                    </div>
+                                </div>
+                            </a>
+                            <!-- More contributors... -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">Impact Analysis</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Impact Area</th>
+                                        <th>Ideas Count</th>
+                                        <th>Success Rate</th>
+                                        <th>Avg. ROI</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Cost Savings</td>
+                                        <td>45</td>
+                                        <td>75%</td>
+                                        <td>2.8x</td>
+                                    </tr>
+                                    <!-- More impact areas... -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../assets/js/main.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Submission Trend Chart
+            const submissionTrendCtx = document.getElementById('submissionTrendChart').getContext('2d');
+            new Chart(submissionTrendCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                    datasets: [{
+                        label: 'Submitted Ideas',
+                        data: [65, 59, 80, 81, 56, 55],
+                        borderColor: '#4361ee',
+                        tension: 0.1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+
+            // Category Distribution Chart
+            const categoryDistributionCtx = document.getElementById('categoryDistributionChart').getContext('2d');
+            new Chart(categoryDistributionCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Process', 'Product', 'Technology', 'Service', 'Other'],
+                    datasets: [{
+                        data: [30, 25, 20, 15, 10],
+                        backgroundColor: [
+                            '#4361ee',
+                            '#3a0ca3',
+                            '#7209b7',
+                            '#f72585',
+                            '#4cc9f0'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+
+            // Implementation Status Chart
+            const implementationStatusChart = new ApexCharts(document.querySelector("#implementationStatusChart"), {
+                series: [{
+                    name: 'Ideas',
+                    data: [44, 55, 57, 56, 61, 58]
+                }],
+                chart: {
+                    type: 'bar',
+                    height: 300
+                },
+                plotOptions: {
+                    bar: {
+                        horizontal: true,
+                    }
+                },
+                xaxis: {
+                    categories: ['Implemented', 'In Progress', 'Under Review', 'Planned', 'On Hold', 'Rejected'],
+                }
+            });
+            implementationStatusChart.render();
+
+            // Department Participation Chart
+            const departmentParticipationChart = new ApexCharts(document.querySelector("#departmentParticipationChart"), {
+                series: [44, 55, 67, 83],
+                chart: {
+                    type: 'radialBar',
+                    height: 300
+                },
+                plotOptions: {
+                    radialBar: {
+                        dataLabels: {
+                            name: {
+                                fontSize: '22px',
+                            },
+                            value: {
+                                fontSize: '16px',
+                            },
+                            total: {
+                                show: true,
+                                label: 'Total',
+                                formatter: function (w) {
+                                    return '249'
+                                }
+                            }
+                        }
+                    }
+                },
+                labels: ['IT', 'Operations', 'Sales', 'Marketing']
+            });
+            departmentParticipationChart.render();
+        });
+    </script>
+</body>
+</html>

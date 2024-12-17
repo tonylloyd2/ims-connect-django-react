@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Regional Manager Dashboard - IMS Connect</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../assets/css/style.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-light">
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="#">Regional Manager Portal</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="dashboard.html">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="idea-review.html">Review Ideas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="progress-tracking.html">Progress Tracking</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="reports.html">Reports</a>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center">
+                    <span class="text-light me-3" id="regionDisplay">Region: North</span>
+                    <div class="dropdown">
+                        <button class="btn btn-light dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown">
+                            <i class="fas fa-user-tie me-2"></i>Regional Manager
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="profile.html">Profile</a></li>
+                            <li><a class="dropdown-item" href="#" id="logoutBtn">Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mt-4">
+        <!-- Statistics Cards -->
+        <div class="row g-4 mb-4">
+            <div class="col-md-3">
+                <div class="card bg-primary text-white">
+                    <div class="card-body">
+                        <h5 class="card-title">Pending Review</h5>
+                        <h2 class="card-text" id="pendingCount">15</h2>
+                        <small>Ideas awaiting review</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card bg-success text-white">
+                    <div class="card-body">
+                        <h5 class="card-title">Approved</h5>
+                        <h2 class="card-text" id="approvedCount">45</h2>
+                        <small>This month</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card bg-info text-white">
+                    <div class="card-body">
+                        <h5 class="card-title">In Progress</h5>
+                        <h2 class="card-text" id="inProgressCount">12</h2>
+                        <small>Implementation phase</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card bg-warning text-white">
+                    <div class="card-body">
+                        <h5 class="card-title">Active Teams</h5>
+                        <h2 class="card-text" id="teamsCount">8</h2>
+                        <small>Across region</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Row -->
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">Monthly Progress</h5>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="monthlyProgressChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">Ideas by Department</h5>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="departmentChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Ideas Table -->
+        <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Recent Ideas</h5>
+                <div>
+                    <button class="btn btn-primary btn-sm" onclick="exportToExcel()">
+                        <i class="fas fa-download me-2"></i>Export
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Submitter</th>
+                                <th>Department</th>
+                                <th>Status</th>
+                                <th>Submitted</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recentIdeasTable">
+                            <!-- Dynamic content will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Implementation Progress -->
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">Implementation Progress</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="list-group" id="implementationProgress">
+                            <!-- Dynamic content will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">Team Performance</h5>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="teamPerformanceChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../assets/js/main.js"></script>
+    <script>
+        $(document).ready(function() {
+            loadRecentIdeas();
+            loadImplementationProgress();
+            initializeCharts();
+            updateStatistics();
+        });
+
+        function initializeCharts() {
+            // Monthly Progress Chart
+            const monthlyCtx = document.getElementById('monthlyProgressChart').getContext('2d');
+            new Chart(monthlyCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                    datasets: [{
+                        label: 'Approved Ideas',
+                        data: [12, 19, 15, 25, 22, 30],
+                        borderColor: '#4361ee',
+                        tension: 0.1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        }
+                    }
+                }
+            });
+
+            // Department Chart
+            const deptCtx = document.getElementById('departmentChart').getContext('2d');
+            new Chart(deptCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['IT', 'HR', 'Finance', 'Marketing', 'Operations'],
+                    datasets: [{
+                        data: [30, 20, 15, 25, 10],
+                        backgroundColor: [
+                            '#4361ee',
+                            '#3a0ca3',
+                            '#7209b7',
+                            '#f72585',
+                            '#4cc9f0'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'right',
+                        }
+                    }
+                }
+            });
+
+            // Team Performance Chart
+            const teamCtx = document.getElementById('teamPerformanceChart').getContext('2d');
+            new Chart(teamCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Team A', 'Team B', 'Team C', 'Team D'],
+                    datasets: [{
+                        label: 'Ideas Implemented',
+                        data: [8, 12, 5, 9],
+                        backgroundColor: '#4361ee'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        function loadRecentIdeas() {
+            // Simulated data - replace with actual API call
+            const ideas = [
+                {
+                    title: "AI Customer Service Bot",
+                    submitter: "John Doe",
+                    department: "IT",
+                    status: "Pending",
+                    submitted: "2024-12-16"
+                },
+                // Add more ideas...
+            ];
+
+            const tableBody = $('#recentIdeasTable');
+            ideas.forEach(idea => {
+                tableBody.append(`
+                    <tr>
+                        <td>${idea.title}</td>
+                        <td>${idea.submitter}</td>
+                        <td>${idea.department}</td>
+                        <td><span class="badge bg-warning">${idea.status}</span></td>
+                        <td>${idea.submitted}</td>
+                        <td>
+                            <button class="btn btn-sm btn-primary" onclick="reviewIdea('${idea.title}')">Review</button>
+                            <button class="btn btn-sm btn-info" onclick="viewDetails('${idea.title}')">Details</button>
+                        </td>
+                    </tr>
+                `);
+            });
+        }
+
+        function loadImplementationProgress() {
+            // Simulated data - replace with actual API call
+            const implementations = [
+                {
+                    title: "Digital Transformation Project",
+                    progress: 75,
+                    team: "Team Alpha"
+                },
+                // Add more implementations...
+            ];
+
+            const progressList = $('#implementationProgress');
+            implementations.forEach(impl => {
+                progressList.append(`
+                    <div class="list-group-item">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h6 class="mb-1">${impl.title}</h6>
+                            <small>${impl.team}</small>
+                        </div>
+                        <div class="progress mt-2">
+                            <div class="progress-bar" role="progressbar" style="width: ${impl.progress}%"
+                                 aria-valuenow="${impl.progress}" aria-valuemin="0" aria-valuemax="100">
+                                ${impl.progress}%
+                            </div>
+                        </div>
+                    </div>
+                `);
+            });
+        }
+
+        function updateStatistics() {
+            // Update statistics with real data from API
+            $('#pendingCount').text('15');
+            $('#approvedCount').text('45');
+            $('#inProgressCount').text('12');
+            $('#teamsCount').text('8');
+        }
+
+        function exportToExcel() {
+            // Implement Excel export functionality
+            alert('Exporting data to Excel...');
+        }
+
+        function reviewIdea(title) {
+            window.location.href = `idea-review.html?title=${encodeURIComponent(title)}`;
+        }
+
+        function viewDetails(title) {
+            window.location.href = `idea-details.html?title=${encodeURIComponent(title)}`;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Collaboration - IMS Connect</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../assets/css/style.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- DataTables -->
+    <link href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="../../index.html">IMS Connect</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../employee/dashboard.html">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../ideas/submit.html">Submit Idea</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="teams.html">Teams</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../analytics/dashboard.html">Analytics</a>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center">
+                    <div class="dropdown">
+                        <button class="btn btn-light dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown">
+                            <i class="fas fa-user me-2"></i><span id="userName">John Doe</span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="../profile/view.html">Profile</a></li>
+                            <li><a class="dropdown-item" href="../ideas/my-ideas.html">My Ideas</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#" id="logoutBtn">Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mt-4">
+        <!-- Team Overview -->
+        <div class="row mb-4">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">My Teams</h5>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h2 class="mb-0">5</h2>
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createTeamModal">
+                                <i class="fas fa-plus me-2"></i>Create Team
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Active Projects</h5>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h2 class="mb-0">8</h2>
+                            <span class="badge bg-success">3 New Updates</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Collaboration Requests</h5>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h2 class="mb-0">3</h2>
+                            <button class="btn btn-outline-primary" id="viewRequests">View All</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Teams and Projects -->
+        <div class="row">
+            <!-- My Teams -->
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">My Teams</h5>
+                        <div class="btn-group">
+                            <button class="btn btn-outline-secondary btn-sm active">All</button>
+                            <button class="btn btn-outline-secondary btn-sm">Active</button>
+                            <button class="btn btn-outline-secondary btn-sm">Archived</button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="list-group">
+                            <a href="#" class="list-group-item list-group-item-action">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h6 class="mb-1">Process Innovation Team</h6>
+                                    <small class="text-muted">5 members</small>
+                                </div>
+                                <p class="mb-1">Working on streamlining customer service processes</p>
+                                <small class="text-success">2 active projects</small>
+                            </a>
+                            <a href="#" class="list-group-item list-group-item-action">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h6 class="mb-1">Sustainability Initiative</h6>
+                                    <small class="text-muted">8 members</small>
+                                </div>
+                                <p class="mb-1">Developing green energy solutions</p>
+                                <small class="text-success">3 active projects</small>
+                            </a>
+                            <!-- More teams... -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Collaboration Opportunities -->
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Collaboration Opportunities</h5>
+                        <div class="input-group w-50">
+                            <input type="text" class="form-control form-control-sm" placeholder="Search opportunities...">
+                            <button class="btn btn-outline-secondary btn-sm" type="button">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="list-group">
+                            <a href="#" class="list-group-item list-group-item-action">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h6 class="mb-1">AI-Powered Customer Service</h6>
+                                    <span class="badge bg-primary">New</span>
+                                </div>
+                                <p class="mb-1">Looking for ML engineers and UX designers</p>
+                                <small class="text-muted">Posted by Sarah Johnson • 2 days ago</small>
+                            </a>
+                            <a href="#" class="list-group-item list-group-item-action">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h6 class="mb-1">Green Supply Chain Initiative</h6>
+                                    <span class="badge bg-success">Open</span>
+                                </div>
+                                <p class="mb-1">Seeking logistics experts and sustainability specialists</p>
+                                <small class="text-muted">Posted by Mike Chen • 5 days ago</small>
+                            </a>
+                            <!-- More opportunities... -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Active Projects -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">Active Projects</h5>
+            </div>
+            <div class="card-body">
+                <table id="projectsTable" class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Project Name</th>
+                            <th>Team</th>
+                            <th>Progress</th>
+                            <th>Due Date</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Customer Service AI Bot</td>
+                            <td>Process Innovation Team</td>
+                            <td>
+                                <div class="progress" style="height: 5px;">
+                                    <div class="progress-bar" role="progressbar" style="width: 75%"></div>
+                                </div>
+                            </td>
+                            <td>Dec 31, 2024</td>
+                            <td><span class="badge bg-success">On Track</span></td>
+                            <td>
+                                <button class="btn btn-sm btn-outline-primary">View</button>
+                            </td>
+                        </tr>
+                        <!-- More projects... -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create Team Modal -->
+    <div class="modal fade" id="createTeamModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Create New Team</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="createTeamForm">
+                        <div class="mb-3">
+                            <label class="form-label">Team Name</label>
+                            <input type="text" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Description</label>
+                            <textarea class="form-control" rows="3" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Team Type</label>
+                            <select class="form-select" required>
+                                <option value="">Select type...</option>
+                                <option value="project">Project Team</option>
+                                <option value="department">Department Team</option>
+                                <option value="cross_functional">Cross-functional Team</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Initial Members</label>
+                            <select class="form-select" multiple>
+                                <option>Sarah Johnson</option>
+                                <option>Mike Chen</option>
+                                <option>Lisa Wong</option>
+                                <!-- More options... -->
+                            </select>
+                            <div class="form-text">Hold Ctrl/Cmd to select multiple members</div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="createTeamBtn">Create Team</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+    <script src="../../assets/js/main.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Initialize DataTable
+            $('#projectsTable').DataTable({
+                pageLength: 5,
+                lengthMenu: [[5, 10, 25, -1], [5, 10, 25, "All"]]
+            });
+
+            // Handle Team Creation
+            $('#createTeamBtn').click(function() {
+                // TODO: Implement team creation logic
+                alert('Team created successfully!');
+                $('#createTeamModal').modal('hide');
+            });
+
+            // Handle View Requests
+            $('#viewRequests').click(function() {
+                // TODO: Implement view requests logic
+                alert('Redirecting to collaboration requests...');
+            });
+        });
+    </script>
+</body>
+</html>

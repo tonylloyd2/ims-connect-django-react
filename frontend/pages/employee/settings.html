@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - IMS Connect</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../assets/css/style.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+</head>
+<body class="bg-light">
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="dashboard.html">IMS Connect</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="dashboard.html">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="my-ideas.html">My Ideas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="submit-idea.html">Submit Idea</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="team-collaboration.html">Team Collaboration</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="profile.html">Profile</a>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center">
+                    <a href="notifications.html" class="btn btn-light me-2 position-relative">
+                        <i class="fas fa-bell"></i>
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            3
+                            <span class="visually-hidden">unread notifications</span>
+                        </span>
+                    </a>
+                    <div class="dropdown">
+                        <button class="btn btn-light dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown">
+                            <i class="fas fa-user me-2"></i><span id="userName">John Doe</span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="profile.html">Profile</a></li>
+                            <li><a class="dropdown-item active" href="settings.html">Settings</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#" id="logoutBtn">Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mt-4">
+        <div class="row">
+            <!-- Settings Navigation -->
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="list-group list-group-flush">
+                        <a href="#account" class="list-group-item list-group-item-action active" data-bs-toggle="list">
+                            <i class="fas fa-user-cog me-2"></i>Account Settings
+                        </a>
+                        <a href="#notifications" class="list-group-item list-group-item-action" data-bs-toggle="list">
+                            <i class="fas fa-bell me-2"></i>Notification Preferences
+                        </a>
+                        <a href="#privacy" class="list-group-item list-group-item-action" data-bs-toggle="list">
+                            <i class="fas fa-shield-alt me-2"></i>Privacy & Security
+                        </a>
+                        <a href="#appearance" class="list-group-item list-group-item-action" data-bs-toggle="list">
+                            <i class="fas fa-paint-brush me-2"></i>Appearance
+                        </a>
+                        <a href="#integrations" class="list-group-item list-group-item-action" data-bs-toggle="list">
+                            <i class="fas fa-plug me-2"></i>Integrations
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Content -->
+            <div class="col-md-9">
+                <div class="tab-content">
+                    <!-- Account Settings -->
+                    <div class="tab-pane fade show active" id="account">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="card-title mb-0">Account Settings</h5>
+                            </div>
+                            <div class="card-body">
+                                <form id="accountSettingsForm">
+                                    <div class="mb-3">
+                                        <label class="form-label">Email Address</label>
+                                        <input type="email" class="form-control" value="john.doe@example.com" readonly>
+                                        <small class="text-muted">Contact your administrator to change your email address</small>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Change Password</label>
+                                        <input type="password" class="form-control mb-2" placeholder="Current Password">
+                                        <input type="password" class="form-control mb-2" placeholder="New Password">
+                                        <input type="password" class="form-control" placeholder="Confirm New Password">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Time Zone</label>
+                                        <select class="form-select" id="timeZone">
+                                            <option value="UTC">UTC</option>
+                                            <option value="America/New_York">Eastern Time</option>
+                                            <option value="America/Chicago">Central Time</option>
+                                            <option value="America/Denver">Mountain Time</option>
+                                            <option value="America/Los_Angeles">Pacific Time</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Language</label>
+                                        <select class="form-select" id="language">
+                                            <option value="en">English</option>
+                                            <option value="es">Spanish</option>
+                                            <option value="fr">French</option>
+                                            <option value="de">German</option>
+                                        </select>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Notification Preferences -->
+                    <div class="tab-pane fade" id="notifications">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="card-title mb-0">Notification Preferences</h5>
+                            </div>
+                            <div class="card-body">
+                                <form id="notificationSettingsForm">
+                                    <div class="mb-4">
+                                        <h6>Email Notifications</h6>
+                                        <div class="form-check form-switch mb-2">
+                                            <input class="form-check-input" type="checkbox" id="emailIdeas" checked>
+                                            <label class="form-check-label" for="emailIdeas">Ideas and Comments</label>
+                                        </div>
+                                        <div class="form-check form-switch mb-2">
+                                            <input class="form-check-input" type="checkbox" id="emailTeam" checked>
+                                            <label class="form-check-label" for="emailTeam">Team Updates</label>
+                                        </div>
+                                        <div class="form-check form-switch mb-2">
+                                            <input class="form-check-input" type="checkbox" id="emailSystem">
+                                            <label class="form-check-label" for="emailSystem">System Announcements</label>
+                                        </div>
+                                    </div>
+                                    <div class="mb-4">
+                                        <h6>Push Notifications</h6>
+                                        <div class="form-check form-switch mb-2">
+                                            <input class="form-check-input" type="checkbox" id="pushIdeas" checked>
+                                            <label class="form-check-label" for="pushIdeas">Ideas and Comments</label>
+                                        </div>
+                                        <div class="form-check form-switch mb-2">
+                                            <input class="form-check-input" type="checkbox" id="pushTeam" checked>
+                                            <label class="form-check-label" for="pushTeam">Team Updates</label>
+                                        </div>
+                                        <div class="form-check form-switch mb-2">
+                                            <input class="form-check-input" type="checkbox" id="pushSystem">
+                                            <label class="form-check-label" for="pushSystem">System Announcements</label>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Save Preferences</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Privacy & Security -->
+                    <div class="tab-pane fade" id="privacy">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="card-title mb-0">Privacy & Security</h5>
+                            </div>
+                            <div class="card-body">
+                                <form id="privacySettingsForm">
+                                    <div class="mb-4">
+                                        <h6>Profile Visibility</h6>
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="radio" name="profileVisibility" id="visibilityPublic" checked>
+                                            <label class="form-check-label" for="visibilityPublic">
+                                                Public - Anyone in the organization can view
+                                            </label>
+                                        </div>
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="radio" name="profileVisibility" id="visibilityTeam">
+                                            <label class="form-check-label" for="visibilityTeam">
+                                                Team Only - Only team members can view
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="mb-4">
+                                        <h6>Two-Factor Authentication</h6>
+                                        <div class="form-check form-switch mb-2">
+                                            <input class="form-check-input" type="checkbox" id="twoFactor">
+                                            <label class="form-check-label" for="twoFactor">Enable Two-Factor Authentication</label>
+                                        </div>
+                                        <small class="text-muted">Enhance your account security by enabling two-factor authentication</small>
+                                    </div>
+                                    <div class="mb-4">
+                                        <h6>Activity Log</h6>
+                                        <div class="form-check form-switch mb-2">
+                                            <input class="form-check-input" type="checkbox" id="activityLog" checked>
+                                            <label class="form-check-label" for="activityLog">Track my activity</label>
+                                        </div>
+                                        <small class="text-muted">Allow the system to track your activities for better recommendations</small>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Save Settings</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Appearance -->
+                    <div class="tab-pane fade" id="appearance">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="card-title mb-0">Appearance Settings</h5>
+                            </div>
+                            <div class="card-body">
+                                <form id="appearanceSettingsForm">
+                                    <div class="mb-4">
+                                        <h6>Theme</h6>
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="radio" name="theme" id="themeLight" checked>
+                                            <label class="form-check-label" for="themeLight">Light</label>
+                                        </div>
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="radio" name="theme" id="themeDark">
+                                            <label class="form-check-label" for="themeDark">Dark</label>
+                                        </div>
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="radio" name="theme" id="themeSystem">
+                                            <label class="form-check-label" for="themeSystem">Use System Settings</label>
+                                        </div>
+                                    </div>
+                                    <div class="mb-4">
+                                        <h6>Font Size</h6>
+                                        <select class="form-select" id="fontSize">
+                                            <option value="small">Small</option>
+                                            <option value="medium" selected>Medium</option>
+                                            <option value="large">Large</option>
+                                        </select>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Save Preferences</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Integrations -->
+                    <div class="tab-pane fade" id="integrations">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="card-title mb-0">Integrations</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-4">
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <div>
+                                            <h6 class="mb-0">Microsoft Teams</h6>
+                                            <small class="text-muted">Connect with your Teams account</small>
+                                        </div>
+                                        <button class="btn btn-outline-primary">Connect</button>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <div>
+                                            <h6 class="mb-0">Slack</h6>
+                                            <small class="text-muted">Connect with your Slack workspace</small>
+                                        </div>
+                                        <button class="btn btn-outline-primary">Connect</button>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h6 class="mb-0">Google Calendar</h6>
+                                            <small class="text-muted">Sync with your calendar</small>
+                                        </div>
+                                        <button class="btn btn-outline-primary">Connect</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Initialize Select2 for enhanced select boxes
+            $('.select2').select2();
+
+            // Form submission handlers
+            $('#accountSettingsForm').on('submit', function(e) {
+                e.preventDefault();
+                // Handle account settings update
+                showToast('Account settings updated successfully!');
+            });
+
+            $('#notificationSettingsForm').on('submit', function(e) {
+                e.preventDefault();
+                // Handle notification preferences update
+                showToast('Notification preferences updated successfully!');
+            });
+
+            $('#privacySettingsForm').on('submit', function(e) {
+                e.preventDefault();
+                // Handle privacy settings update
+                showToast('Privacy settings updated successfully!');
+            });
+
+            $('#appearanceSettingsForm').on('submit', function(e) {
+                e.preventDefault();
+                // Handle appearance settings update
+                showToast('Appearance settings updated successfully!');
+            });
+
+            // Toast notification function
+            function showToast(message) {
+                const toast = `
+                    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+                        <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
+                            <div class="toast-header">
+                                <strong class="me-auto">Success</strong>
+                                <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+                            </div>
+                            <div class="toast-body">
+                                ${message}
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                $(toast).appendTo('body');
+                setTimeout(() => {
+                    $('.toast').toast('hide');
+                }, 3000);
+            }
+
+            // Handle theme changes
+            $('input[name="theme"]').on('change', function() {
+                const theme = $(this).attr('id');
+                // Implement theme change logic here
+            });
+
+            // Two-factor authentication toggle
+            $('#twoFactor').on('change', function() {
+                if ($(this).is(':checked')) {
+                    // Show 2FA setup modal or redirect to setup page
+                    alert('Two-factor authentication setup will be implemented here');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

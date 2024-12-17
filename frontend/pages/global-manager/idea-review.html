@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Idea Review - IMS Connect</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../assets/css/style.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- DataTables -->
+    <link href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="dashboard.html">Global Manager Portal</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="dashboard.html">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="idea-review.html">Idea Review</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="portfolio.html">Portfolio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="reports.html">Reports</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="strategy.html">Strategy</a>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center">
+                    <div class="dropdown">
+                        <button class="btn btn-light dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown">
+                            <i class="fas fa-user-tie me-2"></i><span id="userName">Global Manager</span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="../profile/view.html">Profile</a></li>
+                            <li><a class="dropdown-item" href="settings.html">Settings</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#" id="logoutBtn">Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mt-4">
+        <!-- Filters and Search -->
+        <div class="row mb-4">
+            <div class="col-md-8">
+                <div class="btn-group">
+                    <button class="btn btn-outline-primary active">All Ideas</button>
+                    <button class="btn btn-outline-primary">Pending Review</button>
+                    <button class="btn btn-outline-primary">Under Evaluation</button>
+                    <button class="btn btn-outline-primary">Approved</button>
+                    <button class="btn btn-outline-primary">Rejected</button>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search ideas...">
+                    <button class="btn btn-outline-secondary" type="button">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ideas Table -->
+        <div class="card">
+            <div class="card-body">
+                <table id="ideasTable" class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Title</th>
+                            <th>Submitter</th>
+                            <th>Region</th>
+                            <th>Category</th>
+                            <th>Impact</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>#1234</td>
+                            <td>Global Supply Chain Optimization</td>
+                            <td>John Smith</td>
+                            <td>APAC</td>
+                            <td>Process Improvement</td>
+                            <td>High</td>
+                            <td><span class="badge bg-warning">Pending Review</span></td>
+                            <td>
+                                <button class="btn btn-sm btn-primary" onclick="viewIdea(1234)">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="btn btn-sm btn-success" onclick="approveIdea(1234)">
+                                    <i class="fas fa-check"></i>
+                                </button>
+                                <button class="btn btn-sm btn-danger" onclick="rejectIdea(1234)">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <!-- More idea rows... -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Idea View Modal -->
+    <div class="modal fade" id="ideaViewModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Idea Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h4 id="ideaTitle">Global Supply Chain Optimization</h4>
+                            <p class="text-muted">Submitted by John Smith (APAC Region) on Dec 15, 2024</p>
+                            
+                            <h5>Description</h5>
+                            <p id="ideaDescription">
+                                Detailed description of the idea will be displayed here...
+                            </p>
+
+                            <h5>Expected Impact</h5>
+                            <ul>
+                                <li>Cost Reduction: 15%</li>
+                                <li>Process Efficiency: +25%</li>
+                                <li>Customer Satisfaction: +10%</li>
+                            </ul>
+
+                            <h5>Implementation Timeline</h5>
+                            <div class="progress mb-2">
+                                <div class="progress-bar" role="progressbar" style="width: 25%"></div>
+                            </div>
+                            <small class="text-muted">Estimated: 6 months</small>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h6>Review Status</h6>
+                                    <select class="form-select mb-3">
+                                        <option>Pending Review</option>
+                                        <option>Under Evaluation</option>
+                                        <option>Approved</option>
+                                        <option>Rejected</option>
+                                    </select>
+                                    
+                                    <h6>Priority Level</h6>
+                                    <select class="form-select mb-3">
+                                        <option>High</option>
+                                        <option>Medium</option>
+                                        <option>Low</option>
+                                    </select>
+
+                                    <h6>Assigned To</h6>
+                                    <select class="form-select mb-3">
+                                        <option>Select Reviewer</option>
+                                        <option>Sarah Johnson</option>
+                                        <option>Mike Chen</option>
+                                        <option>Lisa Wong</option>
+                                    </select>
+
+                                    <button class="btn btn-primary w-100">
+                                        Update Status
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6>Review Notes</h6>
+                                    <textarea class="form-control mb-2" rows="3" 
+                                        placeholder="Add your review notes..."></textarea>
+                                    <button class="btn btn-outline-primary w-100">
+                                        Add Note
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-success">Approve</button>
+                    <button type="button" class="btn btn-danger">Reject</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+    <script src="../../assets/js/main.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Initialize DataTable
+            $('#ideasTable').DataTable({
+                pageLength: 10,
+                order: [[0, 'desc']]
+            });
+        });
+
+        function viewIdea(id) {
+            $('#ideaViewModal').modal('show');
+            // TODO: Load idea details from API
+        }
+
+        function approveIdea(id) {
+            if (confirm('Are you sure you want to approve this idea?')) {
+                // TODO: Send approval to API
+                alert('Idea approved successfully!');
+            }
+        }
+
+        function rejectIdea(id) {
+            if (confirm('Are you sure you want to reject this idea?')) {
+                // TODO: Send rejection to API
+                alert('Idea rejected.');
+            }
+        }
+    </script>
+</body>
+</html>

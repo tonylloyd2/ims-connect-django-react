@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audit Logs - IMS Connect Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+    <link href="../../assets/css/style.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="dashboard.html">Admin Portal</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="dashboard.html">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="user-management.html">Users</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="system-config.html">System Config</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="audit-logs.html">Audit Logs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="access-control.html">Access Control</a>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center">
+                    <div class="dropdown">
+                        <button class="btn btn-light dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown">
+                            <i class="fas fa-user-shield me-2"></i><span id="userName">Administrator</span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="profile.html">Profile</a></li>
+                            <li><a class="dropdown-item" href="settings.html">Settings</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#" id="logoutBtn">Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mt-4">
+        <div class="row mb-4">
+            <div class="col">
+                <h2>Audit Logs</h2>
+            </div>
+            <div class="col-auto">
+                <button class="btn btn-primary me-2" onclick="exportLogs()">
+                    <i class="fas fa-download me-2"></i>Export Logs
+                </button>
+                <button class="btn btn-secondary" onclick="clearFilters()">
+                    <i class="fas fa-sync me-2"></i>Clear Filters
+                </button>
+            </div>
+        </div>
+
+        <!-- Filters -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title mb-3">Filters</h5>
+                <form id="filterForm" class="row g-3">
+                    <div class="col-md-3">
+                        <label class="form-label">Date Range</label>
+                        <select class="form-select" id="dateRange">
+                            <option value="today">Today</option>
+                            <option value="yesterday">Yesterday</option>
+                            <option value="last7days">Last 7 Days</option>
+                            <option value="last30days">Last 30 Days</option>
+                            <option value="custom">Custom Range</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">Event Type</label>
+                        <select class="form-select" id="eventType">
+                            <option value="">All Events</option>
+                            <option value="login">Login</option>
+                            <option value="logout">Logout</option>
+                            <option value="create">Create</option>
+                            <option value="update">Update</option>
+                            <option value="delete">Delete</option>
+                            <option value="error">Error</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">User</label>
+                        <input type="text" class="form-control" id="userFilter" placeholder="Search by username">
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">Severity</label>
+                        <select class="form-select" id="severityFilter">
+                            <option value="">All Levels</option>
+                            <option value="info">Info</option>
+                            <option value="warning">Warning</option>
+                            <option value="error">Error</option>
+                            <option value="critical">Critical</option>
+                        </select>
+                    </div>
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary">Apply Filters</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Logs Table -->
+        <div class="card">
+            <div class="card-body">
+                <table id="auditLogsTable" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Timestamp</th>
+                            <th>User</th>
+                            <th>Event Type</th>
+                            <th>Description</th>
+                            <th>IP Address</th>
+                            <th>Severity</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Sample data - will be populated dynamically -->
+                        <tr>
+                            <td>2024-12-17 05:30:00</td>
+                            <td>admin</td>
+                            <td>login</td>
+                            <td>Successful login attempt</td>
+                            <td>192.168.1.100</td>
+                            <td><span class="badge bg-info">Info</span></td>
+                            <td>
+                                <button class="btn btn-sm btn-info" onclick="viewDetails(1)">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>2024-12-17 05:25:00</td>
+                            <td>john.doe</td>
+                            <td>update</td>
+                            <td>Modified user profile</td>
+                            <td>192.168.1.101</td>
+                            <td><span class="badge bg-warning">Warning</span></td>
+                            <td>
+                                <button class="btn btn-sm btn-info" onclick="viewDetails(2)">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <!-- More rows will be added dynamically -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Log Details Modal -->
+    <div class="modal fade" id="logDetailsModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Log Entry Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><strong>Timestamp:</strong> <span id="modalTimestamp"></span></p>
+                            <p><strong>User:</strong> <span id="modalUser"></span></p>
+                            <p><strong>Event Type:</strong> <span id="modalEventType"></span></p>
+                            <p><strong>IP Address:</strong> <span id="modalIpAddress"></span></p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Severity:</strong> <span id="modalSeverity"></span></p>
+                            <p><strong>Browser:</strong> <span id="modalBrowser"></span></p>
+                            <p><strong>Operating System:</strong> <span id="modalOS"></span></p>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-12">
+                            <h6>Description</h6>
+                            <p id="modalDescription"></p>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-12">
+                            <h6>Additional Data</h6>
+                            <pre id="modalAdditionalData" class="bg-light p-3 rounded"></pre>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+    <script src="../../assets/js/main.js"></script>
+    <script>
+        // Initialize DataTable
+        $(document).ready(function() {
+            $('#auditLogsTable').DataTable({
+                order: [[0, 'desc']],
+                pageLength: 25,
+                dom: 'Bfrtip',
+                buttons: ['copy', 'csv', 'excel', 'pdf']
+            });
+        });
+
+        // Filter form submission
+        $('#filterForm').submit(function(e) {
+            e.preventDefault();
+            // TODO: Implement filter logic
+            alert('Filters applied');
+        });
+
+        // Utility functions
+        function exportLogs() {
+            // TODO: Implement export logic
+            alert('Exporting logs...');
+        }
+
+        function clearFilters() {
+            $('#filterForm')[0].reset();
+            // TODO: Reset table filters
+            alert('Filters cleared');
+        }
+
+        function viewDetails(logId) {
+            // Sample data - replace with actual API call
+            const logData = {
+                timestamp: '2024-12-17 05:30:00',
+                user: 'admin',
+                eventType: 'login',
+                ipAddress: '192.168.1.100',
+                severity: 'Info',
+                browser: 'Chrome 96.0.4664.110',
+                os: 'Windows 10',
+                description: 'Successful login attempt from admin portal',
+                additionalData: {
+                    sessionId: '12345678',
+                    userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) ...',
+                    referrer: 'https://example.com/login'
+                }
+            };
+
+            // Populate modal with data
+            $('#modalTimestamp').text(logData.timestamp);
+            $('#modalUser').text(logData.user);
+            $('#modalEventType').text(logData.eventType);
+            $('#modalIpAddress').text(logData.ipAddress);
+            $('#modalSeverity').text(logData.severity);
+            $('#modalBrowser').text(logData.browser);
+            $('#modalOS').text(logData.os);
+            $('#modalDescription').text(logData.description);
+            $('#modalAdditionalData').text(JSON.stringify(logData.additionalData, null, 2));
+
+            // Show modal
+            new bootstrap.Modal(document.getElementById('logDetailsModal')).show();
+        }
+    </script>
+</body>
+</html>

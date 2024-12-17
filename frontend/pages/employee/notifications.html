@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notifications - IMS Connect</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../assets/css/style.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="dashboard.html">IMS Connect</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="dashboard.html">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="my-ideas.html">My Ideas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="submit-idea.html">Submit Idea</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="team-collaboration.html">Team Collaboration</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="profile.html">Profile</a>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center">
+                    <a href="notifications.html" class="btn btn-light me-2 position-relative active">
+                        <i class="fas fa-bell"></i>
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            3
+                            <span class="visually-hidden">unread notifications</span>
+                        </span>
+                    </a>
+                    <div class="dropdown">
+                        <button class="btn btn-light dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown">
+                            <i class="fas fa-user me-2"></i><span id="userName">John Doe</span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="profile.html">Profile</a></li>
+                            <li><a class="dropdown-item" href="settings.html">Settings</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#" id="logoutBtn">Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mt-4">
+        <div class="row mb-4">
+            <div class="col">
+                <h2>Notifications</h2>
+            </div>
+            <div class="col-auto">
+                <button class="btn btn-primary me-2" onclick="markAllRead()">
+                    <i class="fas fa-check-double me-2"></i>Mark All as Read
+                </button>
+                <div class="btn-group">
+                    <button class="btn btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                        Filter
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#" onclick="filterNotifications('all')">All</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="filterNotifications('unread')">Unread</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="filterNotifications('ideas')">Ideas</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="filterNotifications('teams')">Teams</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="filterNotifications('mentions')">Mentions</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Today's Notifications -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Today</h5>
+            </div>
+            <div class="list-group list-group-flush">
+                <div class="list-group-item list-group-item-action unread">
+                    <div class="d-flex w-100 justify-content-between align-items-center">
+                        <div>
+                            <i class="fas fa-lightbulb text-primary me-2"></i>
+                            <strong>Your idea "Process Automation Tool" has been approved!</strong>
+                            <p class="mb-1 text-muted">The review committee has approved your idea for implementation.</p>
+                        </div>
+                        <small class="text-muted">2 hours ago</small>
+                    </div>
+                    <div class="mt-2">
+                        <button class="btn btn-sm btn-outline-primary me-2" onclick="viewIdea('idea1')">View Idea</button>
+                        <button class="btn btn-sm btn-outline-secondary" onclick="markAsRead(this)">Mark as Read</button>
+                    </div>
+                </div>
+                <div class="list-group-item list-group-item-action unread">
+                    <div class="d-flex w-100 justify-content-between align-items-center">
+                        <div>
+                            <i class="fas fa-comment text-info me-2"></i>
+                            <strong>Jane Smith commented on your idea</strong>
+                            <p class="mb-1 text-muted">"Great suggestion! Have you considered integrating with..."</p>
+                        </div>
+                        <small class="text-muted">4 hours ago</small>
+                    </div>
+                    <div class="mt-2">
+                        <button class="btn btn-sm btn-outline-primary me-2" onclick="viewComment('comment1')">View Comment</button>
+                        <button class="btn btn-sm btn-outline-secondary" onclick="markAsRead(this)">Mark as Read</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Yesterday's Notifications -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Yesterday</h5>
+            </div>
+            <div class="list-group list-group-flush">
+                <div class="list-group-item list-group-item-action unread">
+                    <div class="d-flex w-100 justify-content-between align-items-center">
+                        <div>
+                            <i class="fas fa-users text-success me-2"></i>
+                            <strong>You've been added to the Innovation Task Force team</strong>
+                            <p class="mb-1 text-muted">Mike Johnson added you to the team.</p>
+                        </div>
+                        <small class="text-muted">1 day ago</small>
+                    </div>
+                    <div class="mt-2">
+                        <button class="btn btn-sm btn-outline-primary me-2" onclick="viewTeam('team1')">View Team</button>
+                        <button class="btn btn-sm btn-outline-secondary" onclick="markAsRead(this)">Mark as Read</button>
+                    </div>
+                </div>
+                <div class="list-group-item list-group-item-action">
+                    <div class="d-flex w-100 justify-content-between align-items-center">
+                        <div>
+                            <i class="fas fa-star text-warning me-2"></i>
+                            <strong>Your idea received 5 new votes</strong>
+                            <p class="mb-1 text-muted">Your idea "Mobile App Enhancement" is gaining traction.</p>
+                        </div>
+                        <small class="text-muted">1 day ago</small>
+                    </div>
+                    <div class="mt-2">
+                        <button class="btn btn-sm btn-outline-primary" onclick="viewIdea('idea2')">View Idea</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Earlier Notifications -->
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Earlier</h5>
+            </div>
+            <div class="list-group list-group-flush">
+                <div class="list-group-item list-group-item-action">
+                    <div class="d-flex w-100 justify-content-between align-items-center">
+                        <div>
+                            <i class="fas fa-calendar text-primary me-2"></i>
+                            <strong>Team meeting scheduled</strong>
+                            <p class="mb-1 text-muted">Innovation Task Force meeting scheduled for next week.</p>
+                        </div>
+                        <small class="text-muted">3 days ago</small>
+                    </div>
+                    <div class="mt-2">
+                        <button class="btn btn-sm btn-outline-primary" onclick="viewEvent('event1')">View Event</button>
+                    </div>
+                </div>
+                <div class="list-group-item list-group-item-action">
+                    <div class="d-flex w-100 justify-content-between align-items-center">
+                        <div>
+                            <i class="fas fa-trophy text-success me-2"></i>
+                            <strong>Achievement unlocked!</strong>
+                            <p class="mb-1 text-muted">You've earned the "Innovator" badge for submitting 10 ideas.</p>
+                        </div>
+                        <small class="text-muted">5 days ago</small>
+                    </div>
+                    <div class="mt-2">
+                        <button class="btn btn-sm btn-outline-primary" onclick="viewAchievement('achievement1')">View Achievement</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Load More Button -->
+        <div class="text-center mt-4">
+            <button class="btn btn-outline-primary" onclick="loadMoreNotifications()">
+                Load More
+                <i class="fas fa-chevron-down ms-2"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Notification Settings Modal -->
+    <div class="modal fade" id="notificationSettingsModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Notification Settings</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="notificationSettingsForm">
+                        <h6 class="mb-3">Email Notifications</h6>
+                        <div class="mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="emailIdeas" checked>
+                                <label class="form-check-label" for="emailIdeas">
+                                    Idea Updates
+                                </label>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="emailComments" checked>
+                                <label class="form-check-label" for="emailComments">
+                                    Comments & Mentions
+                                </label>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="emailTeam" checked>
+                                <label class="form-check-label" for="emailTeam">
+                                    Team Updates
+                                </label>
+                            </div>
+                        </div>
+
+                        <h6 class="mb-3 mt-4">Push Notifications</h6>
+                        <div class="mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="pushAll" checked>
+                                <label class="form-check-label" for="pushAll">
+                                    All Notifications
+                                </label>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="pushImportant" checked>
+                                <label class="form-check-label" for="pushImportant">
+                                    Important Updates Only
+                                </label>
+                            </div>
+                        </div>
+
+                        <h6 class="mb-3 mt-4">Notification Frequency</h6>
+                        <div class="mb-3">
+                            <select class="form-select" id="notificationFrequency">
+                                <option value="immediate">Immediate</option>
+                                <option value="hourly">Hourly Digest</option>
+                                <option value="daily">Daily Digest</option>
+                                <option value="weekly">Weekly Digest</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="saveNotificationSettings()">Save Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        // API Configuration
+        const API_BASE_URL = 'http://localhost:8000/api';
+        const token = localStorage.getItem('access_token');
+        const userRole = localStorage.getItem('user_role');
+        
+        // Configure axios defaults
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
+        $(document).ready(function() {
+            // Check authentication
+            if (!token || userRole !== 'employee') {
+                window.location.href = '/index.html';
+                return;
+            }
+
+            // Load initial data
+            loadNotifications();
+            loadUserProfile();
+
+            // Initialize WebSocket for real-time notifications
+            initializeWebSocket();
+
+            // Event handlers
+            $('#logoutBtn').click(function(e) {
+                e.preventDefault();
+                localStorage.removeItem('access_token');
+                window.location.href = '/index.html';
+            });
+
+            // Infinite scroll
+            $(window).scroll(function() {
+                if($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
+                    loadMoreNotifications();
+                }
+            });
+        });
+
+        function loadNotifications() {
+            axios.get(`${API_BASE_URL}/notifications/`, {
+                params: {
+                    filter: currentFilter,
+                    page: page
+                }
+            })
+                .then(response => {
+                    const notifications = response.data;
+                    const container = $('.container');
+                    
+                    // Clear existing notifications if first page
+                    if (page === 1) {
+                        container.find('.card:not(:first)').remove();
+                    }
+                    
+                    // Group notifications by date
+                    const grouped = groupNotificationsByDate(notifications);
+                    
+                    // Append notifications
+                    Object.keys(grouped).forEach(date => {
+                        appendNotificationGroup(date, grouped[date]);
+                    });
+                    
+                    // Update unread count
+                    updateUnreadCount();
+                })
+                .catch(error => {
+                    console.error('Error loading notifications:', error);
+                    showAlert('Error loading notifications', 'danger');
+                });
+        }
+
+        function markAllRead() {
+            axios.post(`${API_BASE_URL}/notifications/mark-all-read/`)
+                .then(() => {
+                    $('.list-group-item.unread').removeClass('unread');
+                    $('.btn-outline-secondary').prop('disabled', true);
+                    updateUnreadCount();
+                    showAlert('All notifications marked as read', 'success');
+                })
+                .catch(error => {
+                    console.error('Error marking notifications as read:', error);
+                    showAlert('Error marking notifications as read', 'danger');
+                });
+        }
+
+        function markAsRead(button) {
+            const notificationId = $(button).closest('.list-group-item').data('id');
+            
+            axios.post(`${API_BASE_URL}/notifications/${notificationId}/mark-read/`)
+                .then(() => {
+                    $(button).closest('.list-group-item').removeClass('unread');
+                    $(button).prop('disabled', true);
+                    updateUnreadCount();
+                })
+                .catch(error => {
+                    console.error('Error marking notification as read:', error);
+                    showAlert('Error marking notification as read', 'danger');
+                });
+        }
+
+        function filterNotifications(type) {
+            currentFilter = type;
+            page = 1;
+            loadNotifications();
+        }
+
+        function loadMoreNotifications() {
+            page++;
+            loadNotifications();
+        }
+
+        function viewIdea(ideaId) {
+            window.location.href = `view-idea.html?id=${ideaId}`;
+        }
+
+        function viewComment(commentId) {
+            const notificationId = $(event.target).closest('.list-group-item').data('id');
+            
+            axios.get(`${API_BASE_URL}/notifications/${notificationId}/comment/`)
+                .then(response => {
+                    const comment = response.data;
+                    window.location.href = `view-idea.html?id=${comment.idea_id}#comment-${comment.id}`;
+                })
+                .catch(error => {
+                    console.error('Error loading comment details:', error);
+                    showAlert('Error loading comment details', 'danger');
+                });
+        }
+
+        function viewTeam(teamId) {
+            window.location.href = `team-collaboration.html?team=${teamId}`;
+        }
+
+        function viewEvent(eventId) {
+            // Implement event viewing functionality
+            console.log('Viewing event:', eventId);
+        }
+
+        function viewAchievement(achievementId) {
+            window.location.href = `profile.html#achievement-${achievementId}`;
+        }
+
+        // Utility functions
+        function groupNotificationsByDate(notifications) {
+            const grouped = {};
+            
+            notifications.forEach(notification => {
+                const date = getNotificationDateGroup(notification.created_at);
+                if (!grouped[date]) {
+                    grouped[date] = [];
+                }
+                grouped[date].push(notification);
+            });
+            
+            return grouped;
+        }
+
+        function getNotificationDateGroup(dateString) {
+            const date = new Date(dateString);
+            const today = new Date();
+            const yesterday = new Date(today);
+            yesterday.setDate(yesterday.getDate() - 1);
+            
+            if (date.toDateString() === today.toDateString()) return 'Today';
+            if (date.toDateString() === yesterday.toDateString()) return 'Yesterday';
+            return 'Earlier';
+        }
+
+        function appendNotificationGroup(date, notifications) {
+            const container = $('.container');
+            
+            // Create group card if it doesn't exist
+            let groupCard = container.find(`.card:has(.card-title:contains("${date}"))`);
+            if (groupCard.length === 0) {
+                groupCard = $(`
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">${date}</h5>
+                        </div>
+                        <div class="list-group list-group-flush"></div>
+                    </div>
+                `);
+                container.append(groupCard);
+            }
+            
+            // Add notifications to group
+            const listGroup = groupCard.find('.list-group');
+            notifications.forEach(notification => {
+                listGroup.append(createNotificationElement(notification));
+            });
+        }
+
+        function createNotificationElement(notification) {
+            return `
+                <div class="list-group-item list-group-item-action ${notification.is_read ? '' : 'unread'}" 
+                     data-id="${notification.id}">
+                    <div class="d-flex w-100 justify-content-between align-items-center">
+                        <div>
+                            <i class="${getNotificationIcon(notification.type)} me-2"></i>
+                            <strong>${notification.title}</strong>
+                            <p class="mb-1 text-muted">${notification.message}</p>
+                        </div>
+                        <small class="text-muted">${formatTimeAgo(notification.created_at)}</small>
+                    </div>
+                    <div class="mt-2">
+                        ${getNotificationActions(notification)}
+                    </div>
+                </div>
+            `;
+        }
+
+        function getNotificationIcon(type) {
+            const icons = {
+                'idea': 'fas fa-lightbulb text-primary',
+                'comment': 'fas fa-comment text-info',
+                'team': 'fas fa-users text-success',
+                'vote': 'fas fa-star text-warning',
+                'event': 'fas fa-calendar text-primary',
+                'achievement': 'fas fa-trophy text-success'
+            };
+            return icons[type] || 'fas fa-bell text-secondary';
+        }
+
+        function getNotificationActions(notification) {
+            let actions = '';
+            
+            // Add view action based on notification type
+            switch (notification.type) {
+                case 'idea':
+                    actions += `<button class="btn btn-sm btn-outline-primary me-2" onclick="viewIdea('${notification.reference_id}')">View Idea</button>`;
+                    break;
+                case 'comment':
+                    actions += `<button class="btn btn-sm btn-outline-primary me-2" onclick="viewComment('${notification.reference_id}')">View Comment</button>`;
+                    break;
+                case 'team':
+                    actions += `<button class="btn btn-sm btn-outline-primary me-2" onclick="viewTeam('${notification.reference_id}')">View Team</button>`;
+                    break;
+                case 'event':
+                    actions += `<button class="btn btn-sm btn-outline-primary me-2" onclick="viewEvent('${notification.reference_id}')">View Event</button>`;
+                    break;
+                case 'achievement':
+                    actions += `<button class="btn btn-sm btn-outline-primary me-2" onclick="viewAchievement('${notification.reference_id}')">View Achievement</button>`;
+                    break;
+            }
+            
+            // Add mark as read button for unread notifications
+            if (!notification.is_read) {
+                actions += `<button class="btn btn-sm btn-outline-secondary" onclick="markAsRead(this)">Mark as Read</button>`;
+            }
+            
+            return actions;
+        }
+
+        function updateUnreadCount() {
+            axios.get(`${API_BASE_URL}/notifications/unread-count/`)
+                .then(response => {
+                    const count = response.data.count;
+                    const badge = $('.badge.rounded-pill');
+                    
+                    if (count > 0) {
+                        badge.text(count).show();
+                    } else {
+                        badge.hide();
+                    }
+                })
+                .catch(error => {
+                    console.error('Error updating unread count:', error);
+                });
+        }
+
+        function formatTimeAgo(dateString) {
+            const date = new Date(dateString);
+            const now = new Date();
+            const diffInSeconds = Math.floor((now - date) / 1000);
+            
+            if (diffInSeconds < 60) return 'just now';
+            if (diffInSeconds < 3600) return `${Math.floor(diffInSeconds / 60)} minutes ago`;
+            if (diffInSeconds < 86400) return `${Math.floor(diffInSeconds / 3600)} hours ago`;
+            if (diffInSeconds < 604800) return `${Math.floor(diffInSeconds / 86400)} days ago`;
+            return date.toLocaleDateString();
+        }
+
+        function showAlert(message, type) {
+            const alertHtml = `
+                <div class="alert alert-${type} alert-dismissible fade show" role="alert">
+                    ${message}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            `;
+            // Insert alert before the content
+            $('.container').prepend(alertHtml);
+            // Remove alert after 3 seconds
+            setTimeout(() => {
+                $('.alert').alert('close');
+            }, 3000);
+        }
+
+        function loadUserProfile() {
+            axios.get(`${API_BASE_URL}/users/profile/`)
+                .then(response => {
+                    const user = response.data;
+                    $('#userName').text(user.name);
+                })
+                .catch(error => {
+                    console.error('Error loading user profile:', error);
+                });
+        }
+
+        // WebSocket setup for real-time notifications
+        function initializeWebSocket() {
+            const ws = new WebSocket(`ws://localhost:8000/ws/notifications/`);
+            
+            ws.onmessage = function(event) {
+                const notification = JSON.parse(event.data);
+                
+                // Add new notification to appropriate group
+                const date = getNotificationDateGroup(notification.created_at);
+                appendNotificationGroup(date, [notification]);
+                
+                // Update unread count
+                updateUnreadCount();
+                
+                // Show notification toast
+                showNotificationToast(notification);
+            };
+
+            ws.onclose = function() {
+                console.log('WebSocket connection closed');
+                // Attempt to reconnect after 5 seconds
+                setTimeout(initializeWebSocket, 5000);
+            };
+        }
+
+        function showNotificationToast(notification) {
+            const toast = `
+                <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="toast-header">
+                        <i class="${getNotificationIcon(notification.type)} me-2"></i>
+                        <strong class="me-auto">New Notification</strong>
+                        <small>just now</small>
+                        <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+                    </div>
+                    <div class="toast-body">
+                        ${notification.message}
+                    </div>
+                </div>
+            `;
+            
+            $('.toast-container').append(toast);
+            $('.toast').toast('show');
+        }
+    </script>
+</body>
+</html>

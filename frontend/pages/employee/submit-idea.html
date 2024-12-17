@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Idea - IMS Connect</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+    <link href="../../assets/css/style.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="dashboard.html">IMS Connect</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="dashboard.html">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="my-ideas.html">My Ideas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="submit-idea.html">Submit Idea</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="team-collaboration.html">Team Collaboration</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="profile.html">Profile</a>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center">
+                    <a href="notifications.html" class="btn btn-light me-2 position-relative">
+                        <i class="fas fa-bell"></i>
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            3
+                            <span class="visually-hidden">unread notifications</span>
+                        </span>
+                    </a>
+                    <div class="dropdown">
+                        <button class="btn btn-light dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown">
+                            <i class="fas fa-user me-2"></i><span id="userName">John Doe</span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="profile.html">Profile</a></li>
+                            <li><a class="dropdown-item" href="settings.html">Settings</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#" id="logoutBtn">Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mt-4">
+        <div class="row mb-4">
+            <div class="col">
+                <h2 id="pageTitle">Submit New Idea</h2>
+            </div>
+        </div>
+
+        <!-- Idea Submission Form -->
+        <div class="card">
+            <div class="card-body">
+                <form id="ideaForm" class="needs-validation" novalidate>
+                    <!-- Basic Information -->
+                    <div class="mb-4">
+                        <h5>Basic Information</h5>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Title <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="ideaTitle" required>
+                                <div class="invalid-feedback">Please provide a title for your idea.</div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Category <span class="text-danger">*</span></label>
+                                <select class="form-select select2" id="ideaCategory" required>
+                                    <option value="">Select a category</option>
+                                </select>
+                                <div class="invalid-feedback">Please select a category.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Description -->
+                    <div class="mb-4">
+                        <h5>Description</h5>
+                        <div class="mb-3">
+                            <label class="form-label">Brief Summary <span class="text-danger">*</span></label>
+                            <textarea class="form-control" id="ideaSummary" rows="2" required></textarea>
+                            <div class="invalid-feedback">Please provide a brief summary.</div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Detailed Description <span class="text-danger">*</span></label>
+                            <div id="ideaDescription"></div>
+                            <div class="invalid-feedback">Please provide a detailed description.</div>
+                        </div>
+                    </div>
+
+                    <!-- Benefits & Impact -->
+                    <div class="mb-4">
+                        <h5>Benefits & Impact</h5>
+                        <div class="mb-3">
+                            <label class="form-label">Expected Benefits <span class="text-danger">*</span></label>
+                            <select class="form-select" id="ideaBenefits" multiple required>
+                                <option value="productivity">Increased Productivity</option>
+                                <option value="cost">Cost Savings</option>
+                                <option value="quality">Quality Improvement</option>
+                                <option value="satisfaction">Customer Satisfaction</option>
+                                <option value="efficiency">Process Efficiency</option>
+                                <option value="revenue">Revenue Growth</option>
+                                <option value="environment">Environmental Impact</option>
+                                <option value="safety">Safety Enhancement</option>
+                            </select>
+                            <div class="invalid-feedback">Please select at least one expected benefit.</div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Impact Level</label>
+                            <select class="form-select" id="ideaImpact">
+                                <option value="low">Low</option>
+                                <option value="medium">Medium</option>
+                                <option value="high">High</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Measurable Outcomes</label>
+                            <textarea class="form-control" id="ideaOutcomes" rows="3" placeholder="Describe how the success of this idea can be measured..."></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Implementation -->
+                    <div class="mb-4">
+                        <h5>Implementation</h5>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Estimated Timeline</label>
+                                <select class="form-select" id="ideaTimeline">
+                                    <option value="1-month">1 Month</option>
+                                    <option value="3-months">3 Months</option>
+                                    <option value="6-months">6 Months</option>
+                                    <option value="1-year">1 Year</option>
+                                    <option value="1-year-plus">More than 1 Year</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Required Resources</label>
+                                <select class="form-select" id="ideaResources" multiple>
+                                    <option value="development">Development Team</option>
+                                    <option value="design">Design Team</option>
+                                    <option value="marketing">Marketing Team</option>
+                                    <option value="finance">Financial Resources</option>
+                                    <option value="hardware">Hardware/Equipment</option>
+                                    <option value="training">Training</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Attachments -->
+                    <div class="mb-4">
+                        <h5>Attachments</h5>
+                        <div class="mb-3">
+                            <label class="form-label">Supporting Documents</label>
+                            <input type="file" class="form-control" id="ideaAttachments" multiple>
+                            <div class="form-text">Upload any relevant documents, diagrams, or presentations (Max. 5 files, 10MB each)</div>
+                        </div>
+                    </div>
+
+                    <!-- Collaboration -->
+                    <div class="mb-4">
+                        <h5>Collaboration</h5>
+                        <div class="mb-3">
+                            <label class="form-label">Team Members</label>
+                            <select class="form-select" id="ideaTeam" multiple>
+                                <option value="user1">Jane Smith</option>
+                                <option value="user2">Mike Johnson</option>
+                                <option value="user3">Sarah Williams</option>
+                                <option value="user4">David Brown</option>
+                            </select>
+                            <div class="form-text">Select team members who will collaborate on this idea</div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="ideaPublic">
+                                <label class="form-check-label" for="ideaPublic">
+                                    Make this idea visible to all employees
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Submit Buttons -->
+                    <div class="d-flex justify-content-between">
+                        <button type="button" class="btn btn-secondary" id="saveDraftBtn">Save as Draft</button>
+                        <div>
+                            <button type="button" class="btn btn-light me-2" id="previewBtn">Preview</button>
+                            <button type="submit" class="btn btn-primary">Submit Idea</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Preview Modal -->
+    <div class="modal fade" id="previewModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Preview Idea</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="previewContent"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Check authentication
+            const token = localStorage.getItem('access_token');
+            if (!token) {
+                window.location.href = '/index.html';
+                return;
+            }
+
+            // Initialize axios with the base URL and auth header
+            if (!axios.defaults.baseURL) {
+                axios.defaults.baseURL = 'http://localhost:8000';
+            }
+            
+            // Set default headers
+            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+            axios.defaults.headers.common['Content-Type'] = 'application/json';
+
+            // Load categories when page loads
+            loadCategories('#ideaCategory');
+            
+            // Initialize Select2
+            initializeSelect2();
+            
+            // Initialize Summernote for rich text editor
+            $('#ideaDescription').summernote({
+                height: 200,
+                toolbar: [
+                    ['style', ['bold', 'italic', 'underline', 'clear']],
+                    ['font', ['strikethrough']],
+                    ['para', ['ul', 'ol']],
+                    ['insert', ['link']],
+                    ['view', ['fullscreen', 'codeview']]
+                ]
+            });
+
+            // Form submission handler
+            $('#ideaForm').on('submit', function(e) {
+                e.preventDefault();
+                if (validateForm()) {
+                    submitIdea();
+                }
+            });
+
+            // Save draft button handler
+            $('#saveDraftBtn').on('click', function(e) {
+                e.preventDefault();
+                saveDraft();
+            });
+
+            // Preview button handler
+            $('#previewBtn').on('click', function(e) {
+                e.preventDefault();
+                previewIdea();
+            });
+        });
+
+        async function submitIdea() {
+            try {
+                const formData = getIdeaData();
+                const response = await axios.post('/api/ideas/', formData);
+                console.log('Idea submitted:', response.data);
+                showSuccess('Idea submitted successfully!');
+                setTimeout(() => {
+                    window.location.href = 'my-ideas.html';
+                }, 1500);
+            } catch (error) {
+                console.error('Error submitting idea:', error);
+                if (error.response?.status === 401) {
+                    // Redirect to login page if unauthorized
+                    window.location.href = '/index.html';
+                } else {
+                    showError('Failed to submit idea. Please try again.');
+                }
+            }
+        }
+
+        async function saveDraft() {
+            try {
+                const formData = getIdeaData();
+                formData.status = 'draft';
+                const response = await axios.post('/api/ideas/', formData);
+                console.log('Draft saved:', response.data);
+                showSuccess('Draft saved successfully!');
+            } catch (error) {
+                console.error('Error saving draft:', error);
+                if (error.response?.status === 401) {
+                    // Redirect to login page if unauthorized
+                    window.location.href = '/index.html';
+                } else {
+                    showError('Failed to save draft. Please try again.');
+                }
+            }
+        }
+
+        async function loadCategories(selectId) {
+            try {
+                console.log('Loading categories...');
+                const token = localStorage.getItem('access_token');
+                if (!token) {
+                    throw new Error('No authentication token found');
+                }
+
+                const response = await axios.get('/api/categories/', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                console.log('Categories response:', response.data);
+                
+                const select = $(selectId);
+                select.empty();
+                select.append('<option value="">Select a category</option>');
+                
+                // Handle paginated response
+                const categories = response.data.results || response.data;
+                if (Array.isArray(categories)) {
+                    categories.forEach(category => {
+                        select.append(`<option value="${category.id}">${category.name}</option>`);
+                    });
+                    // Trigger Select2 to update
+                    select.trigger('change');
+                    console.log('Categories loaded successfully');
+                } else {
+                    console.error('Invalid categories data:', response.data);
+                    showError('Invalid categories data received from server');
+                }
+            } catch (error) {
+                console.error('Error loading categories:', error);
+                if (error.response?.status === 401) {
+                    // Redirect to login page if unauthorized
+                    window.location.href = '/index.html';
+                } else {
+                    showError('Failed to load categories. Please try again.');
+                }
+            }
+        }
+
+        function initializeSelect2() {
+            $('.select2').select2({
+                theme: 'bootstrap-5',
+                width: '100%'
+            });
+        }
+
+        function validateForm() {
+            const form = document.getElementById('ideaForm');
+            if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+                form.classList.add('was-validated');
+                return false;
+            }
+            return true;
+        }
+
+        function showSuccess(message) {
+            const alertHtml = `
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    ${message}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            `;
+            // Insert alert before the form
+            $('.card').before(alertHtml);
+        }
+
+        function showError(message) {
+            const alertHtml = `
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    ${message}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            `;
+            // Insert alert before the form
+            $('.card').before(alertHtml);
+        }
+
+        function getIdeaData() {
+            return {
+                title: $('#ideaTitle').val(),
+                description: $('#ideaDescription').summernote('code'),
+                category: $('#ideaCategory').val(),
+                estimated_time: $('#estimatedTime').val(),
+                implementation_cost: $('#implementationCost').val(),
+                required_expertise: JSON.stringify($('#requiredExpertise').val() || []),
+                tags: JSON.stringify($('#tags').val() || []),
+                is_cross_regional: $('#isCrossRegional').is(':checked'),
+                status: 'submitted'
+            };
+        }
+    </script>
+</body>
+</html>

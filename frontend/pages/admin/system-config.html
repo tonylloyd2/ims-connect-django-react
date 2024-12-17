@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Configuration - IMS Connect Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../assets/css/style.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="dashboard.html">Admin Portal</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="dashboard.html">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="user-management.html">Users</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="system-config.html">System Config</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="audit-logs.html">Audit Logs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="access-control.html">Access Control</a>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center">
+                    <div class="dropdown">
+                        <button class="btn btn-light dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown">
+                            <i class="fas fa-user-shield me-2"></i><span id="userName">Administrator</span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="profile.html">Profile</a></li>
+                            <li><a class="dropdown-item" href="settings.html">Settings</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#" id="logoutBtn">Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mt-4">
+        <!-- Config Navigation -->
+        <ul class="nav nav-tabs mb-4">
+            <li class="nav-item">
+                <a class="nav-link active" href="#general" data-bs-toggle="tab">General Settings</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#email" data-bs-toggle="tab">Email Configuration</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#security" data-bs-toggle="tab">Security Settings</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#backup" data-bs-toggle="tab">Backup & Maintenance</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#integration" data-bs-toggle="tab">Integrations</a>
+            </li>
+        </ul>
+
+        <!-- Config Content -->
+        <div class="tab-content">
+            <!-- General Settings -->
+            <div class="tab-pane fade show active" id="general">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title mb-4">General System Settings</h5>
+                        <form id="generalSettingsForm">
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">System Name</label>
+                                    <input type="text" class="form-control" value="IMS Connect">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Default Language</label>
+                                    <select class="form-select">
+                                        <option value="en">English</option>
+                                        <option value="es">Spanish</option>
+                                        <option value="fr">French</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">Default Timezone</label>
+                                    <select class="form-select">
+                                        <option value="UTC">UTC</option>
+                                        <option value="EST">Eastern Time</option>
+                                        <option value="PST">Pacific Time</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Date Format</label>
+                                    <select class="form-select">
+                                        <option value="MM/DD/YYYY">MM/DD/YYYY</option>
+                                        <option value="DD/MM/YYYY">DD/MM/YYYY</option>
+                                        <option value="YYYY-MM-DD">YYYY-MM-DD</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">System Logo</label>
+                                <input type="file" class="form-control" accept="image/*">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Email Configuration -->
+            <div class="tab-pane fade" id="email">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title mb-4">Email Server Configuration</h5>
+                        <form id="emailConfigForm">
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">SMTP Server</label>
+                                    <input type="text" class="form-control" placeholder="smtp.example.com">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">SMTP Port</label>
+                                    <input type="number" class="form-control" placeholder="587">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">Username</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Password</label>
+                                    <input type="password" class="form-control">
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">From Email Address</label>
+                                <input type="email" class="form-control">
+                            </div>
+                            <div class="mb-3">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="useSSL">
+                                    <label class="form-check-label" for="useSSL">
+                                        Use SSL/TLS
+                                    </label>
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-secondary me-2" onclick="testEmailConfig()">Test Connection</button>
+                            <button type="submit" class="btn btn-primary">Save Configuration</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Security Settings -->
+            <div class="tab-pane fade" id="security">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title mb-4">Security Configuration</h5>
+                        <form id="securityConfigForm">
+                            <div class="mb-3">
+                                <label class="form-label">Password Policy</label>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="checkbox" id="requireUppercase" checked>
+                                    <label class="form-check-label" for="requireUppercase">
+                                        Require uppercase letters
+                                    </label>
+                                </div>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="checkbox" id="requireNumbers" checked>
+                                    <label class="form-check-label" for="requireNumbers">
+                                        Require numbers
+                                    </label>
+                                </div>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="checkbox" id="requireSpecial" checked>
+                                    <label class="form-check-label" for="requireSpecial">
+                                        Require special characters
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">Minimum Password Length</label>
+                                    <input type="number" class="form-control" value="8">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Password Expiry (days)</label>
+                                    <input type="number" class="form-control" value="90">
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Session Settings</label>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label class="form-label">Session Timeout (minutes)</label>
+                                        <input type="number" class="form-control" value="30">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Max Login Attempts</label>
+                                        <input type="number" class="form-control" value="5">
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Update Security Settings</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Backup & Maintenance -->
+            <div class="tab-pane fade" id="backup">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title mb-4">Backup & Maintenance Settings</h5>
+                        <div class="mb-4">
+                            <h6>Automated Backups</h6>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">Backup Frequency</label>
+                                    <select class="form-select">
+                                        <option value="daily">Daily</option>
+                                        <option value="weekly">Weekly</option>
+                                        <option value="monthly">Monthly</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Retention Period (days)</label>
+                                    <input type="number" class="form-control" value="30">
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Backup Storage Location</label>
+                                <input type="text" class="form-control" placeholder="/path/to/backup">
+                            </div>
+                            <button class="btn btn-primary me-2" onclick="startBackup()">Start Manual Backup</button>
+                            <button class="btn btn-secondary" onclick="restoreBackup()">Restore from Backup</button>
+                        </div>
+                        <div class="mb-4">
+                            <h6>System Maintenance</h6>
+                            <div class="mb-3">
+                                <label class="form-label">Maintenance Window</label>
+                                <select class="form-select">
+                                    <option value="sunday">Sunday 2:00 AM</option>
+                                    <option value="saturday">Saturday 2:00 AM</option>
+                                    <option value="manual">Manual Schedule</option>
+                                </select>
+                            </div>
+                            <button class="btn btn-warning me-2" onclick="enableMaintenanceMode()">Enable Maintenance Mode</button>
+                            <button class="btn btn-danger" onclick="clearCache()">Clear System Cache</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Integrations -->
+            <div class="tab-pane fade" id="integration">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title mb-4">System Integrations</h5>
+                        <div class="mb-4">
+                            <h6>API Configuration</h6>
+                            <div class="mb-3">
+                                <label class="form-label">API Key</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" value="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" readonly>
+                                    <button class="btn btn-outline-secondary" onclick="regenerateApiKey()">Regenerate</button>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Webhook URL</label>
+                                <input type="url" class="form-control" placeholder="https://example.com/webhook">
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <h6>Third-Party Integrations</h6>
+                            <div class="list-group">
+                                <div class="list-group-item">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h6 class="mb-1">Slack Integration</h6>
+                                            <small class="text-muted">Notifications and alerts</small>
+                                        </div>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="slackIntegration">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="list-group-item">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h6 class="mb-1">Microsoft Teams Integration</h6>
+                                            <small class="text-muted">Team collaboration</small>
+                                        </div>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="teamsIntegration">
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- More integrations... -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../assets/js/main.js"></script>
+    <script>
+        // Form submission handlers
+        $('#generalSettingsForm').submit(function(e) {
+            e.preventDefault();
+            // TODO: Implement save logic
+            alert('General settings saved successfully!');
+        });
+
+        $('#emailConfigForm').submit(function(e) {
+            e.preventDefault();
+            // TODO: Implement save logic
+            alert('Email configuration saved successfully!');
+        });
+
+        $('#securityConfigForm').submit(function(e) {
+            e.preventDefault();
+            // TODO: Implement save logic
+            alert('Security settings updated successfully!');
+        });
+
+        // Utility functions
+        function testEmailConfig() {
+            // TODO: Implement email test logic
+            alert('Testing email configuration...');
+        }
+
+        function startBackup() {
+            // TODO: Implement backup logic
+            alert('Starting manual backup...');
+        }
+
+        function restoreBackup() {
+            // TODO: Implement restore logic
+            alert('Please select a backup to restore...');
+        }
+
+        function enableMaintenanceMode() {
+            if (confirm('Enable maintenance mode? This will prevent users from accessing the system.')) {
+                // TODO: Implement maintenance mode logic
+                alert('Maintenance mode enabled');
+            }
+        }
+
+        function clearCache() {
+            if (confirm('Clear system cache? This may temporarily affect system performance.')) {
+                // TODO: Implement cache clearing logic
+                alert('System cache cleared');
+            }
+        }
+
+        function regenerateApiKey() {
+            if (confirm('Regenerate API key? This will invalidate the existing key.')) {
+                // TODO: Implement API key regeneration logic
+                alert('API key regenerated');
+            }
+        }
+    </script>
+</body>
+</html>

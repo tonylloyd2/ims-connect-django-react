@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IMS Connect - Innovation Management System</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="assets/css/style.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        .role-card {
+            transition: transform 0.3s ease;
+        }
+        .role-card:hover {
+            transform: translateY(-10px);
+        }
+        .feature-icon {
+            width: 4rem;
+            height: 4rem;
+            border-radius: 0.75rem;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body class="bg-light">
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">IMS Connect</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#features">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#roles">Roles</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                </ul>
+                <div class="d-flex">
+                    <a href="#" class="btn btn-outline-light me-2" id="loginBtn">Login</a>
+                    <a href="#" class="btn btn-light" id="registerBtn">Register</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="container-fluid bg-primary text-white py-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6" data-aos="fade-right">
+                    <h1 class="display-4 fw-bold mb-4">Innovate Together, Achieve More</h1>
+                    <p class="lead mb-4">IMS Connect empowers organizations to transform ideas into impact. Our platform streamlines innovation management, facilitates collaboration, and drives measurable results.</p>
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-start mb-4">
+                        <button type="button" class="btn btn-light btn-lg px-5" data-bs-toggle="modal" data-bs-target="#loginModal">Get Started</button>
+                        <button type="button" class="btn btn-outline-light btn-lg px-5" href="#features">Learn More</button>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <div class="me-4">
+                            <h2 class="fw-bold mb-0">500+</h2>
+                            <p class="mb-0">Organizations</p>
+                        </div>
+                        <div class="me-4">
+                            <h2 class="fw-bold mb-0">10k+</h2>
+                            <p class="mb-0">Ideas Generated</p>
+                        </div>
+                        <div>
+                            <h2 class="fw-bold mb-0">95%</h2>
+                            <p class="mb-0">Success Rate</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6" data-aos="fade-left">
+                    <img src="assets/img/innovation.svg" class="img-fluid" alt="Innovation">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <div class="container py-6" id="features">
+        <div class="text-center mb-5">
+            <h6 class="text-primary fw-bold mb-3" data-aos="fade-up">FEATURES</h6>
+            <h2 class="display-5 fw-bold mb-4" data-aos="fade-up">Everything You Need to Innovate</h2>
+            <p class="lead text-muted" data-aos="fade-up">Our comprehensive platform provides all the tools necessary for successful innovation management.</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-4">
+                        <div class="feature-icon bg-primary bg-gradient text-white mb-4 mx-auto d-flex align-items-center justify-content-center">
+                            <i class="fas fa-lightbulb fa-2x"></i>
+                        </div>
+                        <h5 class="card-title mb-3">Idea Management</h5>
+                        <p class="card-text text-muted">Capture, evaluate, and develop innovative ideas through our comprehensive management system. Track progress from conception to implementation.</p>
+                        <ul class="list-unstyled mt-4 mb-0">
+                            <li class="mb-2"><i class="fas fa-check text-primary me-2"></i>Idea submission portal</li>
+                            <li class="mb-2"><i class="fas fa-check text-primary me-2"></i>Evaluation workflow</li>
+                            <li><i class="fas fa-check text-primary me-2"></i>Implementation tracking</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-4">
+                        <div class="feature-icon bg-success bg-gradient text-white mb-4 mx-auto d-flex align-items-center justify-content-center">
+                            <i class="fas fa-users fa-2x"></i>
+                        </div>
+                        <h5 class="card-title mb-3">Team Collaboration</h5>
+                        <p class="card-text text-muted">Foster teamwork and collaboration with real-time communication tools, shared workspaces, and project management features.</p>
+                        <ul class="list-unstyled mt-4 mb-0">
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Real-time messaging</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Document sharing</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Task management</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-4">
+                        <div class="feature-icon bg-info bg-gradient text-white mb-4 mx-auto d-flex align-items-center justify-content-center">
+                            <i class="fas fa-chart-line fa-2x"></i>
+                        </div>
+                        <h5 class="card-title mb-3">Analytics & Insights</h5>
+                        <p class="card-text text-muted">Make data-driven decisions with powerful analytics tools. Monitor KPIs, track progress, and generate comprehensive reports.</p>
+                        <ul class="list-unstyled mt-4 mb-0">
+                            <li class="mb-2"><i class="fas fa-check text-info me-2"></i>Custom dashboards</li>
+                            <li class="mb-2"><i class="fas fa-check text-info me-2"></i>Performance metrics</li>
+                            <li><i class="fas fa-check text-info me-2"></i>ROI tracking</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Roles Section -->
+<div class="container-fluid bg-primary text-white py-6" id="roles">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h6 class="text-white fw-bold mb-3" data-aos="fade-up">USER ROLES</h6>
+            <h2 class="display-5 fw-bold mb-4" data-aos="fade-up">Choose Your Role</h2>
+            <p class="lead mb-5" data-aos="fade-up">Access role-specific features and tools designed to meet your needs.</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                <div class="card bg-white h-100 border-0 shadow-sm role-card">
+                    <div class="card-body text-center p-4">
+                        <div class="feature-icon bg-primary bg-gradient text-white mb-4 mx-auto d-flex align-items-center justify-content-center">
+                            <i class="fas fa-user-tie fa-2x"></i>
+                        </div>
+                        <h5 class="card-title text-dark">Global Manager</h5>
+                        <p class="card-text text-muted mb-4">Oversee global innovation initiatives and strategic decision-making.</p>
+                        <button class="btn btn-primary w-100" onclick="redirectToLogin('global-manager')">Access Portal</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                <div class="card bg-white h-100 border-0 shadow-sm role-card">
+                    <div class="card-body text-center p-4">
+                        <div class="feature-icon bg-success bg-gradient text-white mb-4 mx-auto d-flex align-items-center justify-content-center">
+                            <i class="fas fa-building fa-2x"></i>
+                        </div>
+                        <h5 class="card-title text-dark">Regional Manager</h5>
+                        <p class="card-text text-muted mb-4">Manage regional teams and coordinate innovation efforts.</p>
+                        <button class="btn btn-success w-100" onclick="redirectToLogin('regional-manager')">Access Portal</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="300">
+                <div class="card bg-white h-100 border-0 shadow-sm role-card">
+                    <div class="card-body text-center p-4">
+                        <div class="feature-icon bg-info bg-gradient text-white mb-4 mx-auto d-flex align-items-center justify-content-center">
+                            <i class="fas fa-users-cog fa-2x"></i>
+                        </div>
+                        <h5 class="card-title text-dark">Employee</h5>
+                        <p class="card-text text-muted mb-4">Submit ideas and collaborate with team members.</p>
+                        <button class="btn btn-info w-100" onclick="redirectToLogin('employee')">Access Portal</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="400">
+                <div class="card bg-white h-100 border-0 shadow-sm role-card">
+                    <div class="card-body text-center p-4">
+                        <div class="feature-icon bg-warning bg-gradient text-white mb-4 mx-auto d-flex align-items-center justify-content-center">
+                            <i class="fas fa-user-shield fa-2x"></i>
+                        </div>
+                        <h5 class="card-title text-dark">Administrator</h5>
+                        <p class="card-text text-muted mb-4">Manage system settings and user permissions.</p>
+                        <button class="btn btn-warning w-100" onclick="redirectToLogin('admin')">Access Portal</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light mt-5">
+        <div class="container py-4">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>IMS Connect</h5>
+                    <p>Innovation Management System</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <a href="#" class="text-light me-3">Privacy Policy</a>
+                    <a href="#" class="text-light me-3">Terms of Service</a>
+                    <a href="#" class="text-light">Contact Us</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/main.js"></script>
+    <!-- Login Modal -->
+    <div class="modal fade" id="loginModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Login to IMS Connect</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="loginForm">
+                        <div class="mb-3">
+                            <label class="form-label">Role</label>
+                            <select class="form-select" id="roleSelect" required>
+                                <option value="global-manager">Global Manager</option>
+                                <option value="regional-manager">Regional Manager</option>
+                                <option value="employee">Employee</option>
+                                <option value="admin">Administrator</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Username</label>
+                            <input type="text" class="form-control" id="username" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Password</label>
+                            <input type="password" class="form-control" id="password" required>
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="rememberMe">
+                            <label class="form-check-label" for="rememberMe">Remember me</label>
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">Login</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 1000,
+            once: true
+        });
+
+        // Role-specific dashboard redirections
+        function handleRoleRedirect(role) {
+            const dashboards = {
+                'global-manager': 'pages/global-manager/dashboard.html',
+                'regional-manager': 'pages/regional-manager/dashboard.html',
+                'employee': 'pages/employee/dashboard.html',
+                'admin': 'pages/admin/dashboard.html'
+            };
+            return dashboards[role] || 'index.html';
+        }
+
+        // Function to handle role-based login modal
+        function redirectToLogin(role) {
+            $('#roleSelect').val(role);
+            $('#loginModal').modal('show');
+            // Store the selected role in session storage
+            sessionStorage.setItem('selectedRole', role);
+        }
+
+        // Backend API configuration
+        const API_URL = 'http://localhost:8000';
+        const API_ENDPOINTS = {
+            login: `${API_URL}/api/token/`,
+            refresh: `${API_URL}/api/token/refresh/`,
+            admin: `${API_URL}/admin/`
+        };
+        
+        // Configure axios defaults
+        axios.defaults.withCredentials = true;
+
+        // Handle login form submission with role-specific logic
+        $('#loginForm').on('submit', async function(e) {
+            e.preventDefault();
+            
+            const username = $('#username').val();
+            const password = $('#password').val();
+            const role = sessionStorage.getItem('selectedRole') || $('#roleSelect').val();
+
+            // Show loading state
+            const submitButton = $(this).find('button[type="submit"]');
+            const originalText = submitButton.html();
+            submitButton.html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Logging in...');
+            submitButton.prop('disabled', true);
+
+            try {
+                const response = await axios.post(API_ENDPOINTS.login, {
+                    username: username,
+                    password: password
+                });
+
+                // If we get here, login was successful
+                // Store JWT tokens and user role
+                localStorage.setItem('access_token', response.data.access);
+                localStorage.setItem('refresh_token', response.data.refresh);
+                localStorage.setItem('user_role', role);
+
+                // Configure axios with the new token
+                axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.access}`;
+
+                // Clear session storage
+                sessionStorage.removeItem('selectedRole');
+                
+                // Show success message briefly before redirect
+                const alertPlaceholder = $('#loginAlert');
+                if (alertPlaceholder.length === 0) {
+                    // Create alert placeholder if it doesn't exist
+                    $('.modal-body').prepend('<div id="loginAlert"></div>');
+                }
+                $('#loginAlert').html(`
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        Login successful! Redirecting...
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                `);
+
+                // Redirect to appropriate dashboard after a brief delay
+                setTimeout(() => {
+                    const dashboardUrl = handleRoleRedirect(role);
+                    window.location.href = dashboardUrl;
+                }, 1500);
+
+            } catch (error) {
+                console.error('Login error:', error);
+                
+                let errorMessage = 'Login failed. Please check your credentials.';
+                if (error.response) {
+                    if (error.response.status === 401) {
+                        errorMessage = 'Invalid username or password.';
+                    } else if (error.response.data && error.response.data.detail) {
+                        errorMessage = error.response.data.detail;
+                    }
+                }
+
+                // Show error message
+                const alertPlaceholder = $('#loginAlert');
+                if (alertPlaceholder.length === 0) {
+                    // Create alert placeholder if it doesn't exist
+                    $('.modal-body').prepend('<div id="loginAlert"></div>');
+                }
+                $('#loginAlert').html(`
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        ${errorMessage}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                `);
+
+                // Reset button state
+                submitButton.html(originalText);
+                submitButton.prop('disabled', false);
+            }
+        });
+
+        // Clear session storage when modal is closed
+        $('#loginModal').on('hidden.bs.modal', function () {
+            sessionStorage.removeItem('selectedRole');
+        });
+    </script>
+</body>
+</html>

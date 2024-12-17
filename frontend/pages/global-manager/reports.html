@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Reports - IMS Connect</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../assets/css/style.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- DataTables -->
+    <link href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-light">
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="dashboard.html">Global Manager Portal</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="dashboard.html">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="idea-review.html">Idea Review</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="portfolio.html">Portfolio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="reports.html">Reports</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="strategy.html">Strategy</a>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center">
+                    <div class="dropdown">
+                        <button class="btn btn-light dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown">
+                            <i class="fas fa-user-tie me-2"></i><span id="userName">Global Manager</span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="../profile/view.html">Profile</a></li>
+                            <li><a class="dropdown-item" href="settings.html">Settings</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#" id="logoutBtn">Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mt-4">
+        <!-- Report Generation Controls -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        <label class="form-label">Report Type</label>
+                        <select class="form-select" id="reportType">
+                            <option value="performance">Performance Report</option>
+                            <option value="innovation">Innovation Metrics</option>
+                            <option value="regional">Regional Analysis</option>
+                            <option value="financial">Financial Impact</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">Time Period</label>
+                        <select class="form-select" id="timePeriod">
+                            <option value="last30">Last 30 Days</option>
+                            <option value="last90">Last Quarter</option>
+                            <option value="ytd">Year to Date</option>
+                            <option value="custom">Custom Range</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Region Filter</label>
+                        <select class="form-select" id="regionFilter" multiple>
+                            <option value="all" selected>All Regions</option>
+                            <option value="apac">APAC</option>
+                            <option value="emea">EMEA</option>
+                            <option value="na">North America</option>
+                            <option value="latam">Latin America</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label">&nbsp;</label>
+                        <button class="btn btn-primary w-100" onclick="generateReport()">
+                            Generate Report
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Report Content -->
+        <div class="row mb-4">
+            <!-- Performance Metrics -->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Performance Metrics</h5>
+                        <button class="btn btn-sm btn-outline-primary" onclick="exportChart('performance')">
+                            <i class="fas fa-download me-2"></i>Export
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="performanceChart" height="300"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Regional Comparison -->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Regional Comparison</h5>
+                        <button class="btn btn-sm btn-outline-primary" onclick="exportChart('regional')">
+                            <i class="fas fa-download me-2"></i>Export
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="regionalChart" height="300"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Detailed Metrics Table -->
+        <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Detailed Metrics</h5>
+                <button class="btn btn-sm btn-outline-primary" onclick="exportTable()">
+                    <i class="fas fa-file-excel me-2"></i>Export to Excel
+                </button>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="metricsTable" class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Metric</th>
+                                <th>Current Value</th>
+                                <th>Previous Period</th>
+                                <th>Change</th>
+                                <th>Target</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Innovation Rate</td>
+                                <td>78%</td>
+                                <td>72%</td>
+                                <td class="text-success">+6%</td>
+                                <td>75%</td>
+                                <td><span class="badge bg-success">Above Target</span></td>
+                            </tr>
+                            <!-- More metrics... -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Report Summary -->
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Executive Summary</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-8">
+                        <h6>Key Findings</h6>
+                        <ul>
+                            <li>Innovation rate increased by 6% compared to previous period</li>
+                            <li>APAC region shows highest growth in idea submissions</li>
+                            <li>Implementation efficiency improved across all regions</li>
+                        </ul>
+                        
+                        <h6>Recommendations</h6>
+                        <ul>
+                            <li>Focus on scaling successful innovations from APAC to other regions</li>
+                            <li>Increase resource allocation for high-potential projects</li>
+                            <li>Enhance cross-regional collaboration initiatives</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="alert alert-info">
+                            <h6 class="alert-heading">Report Details</h6>
+                            <hr>
+                            <p class="mb-0">
+                                Generated: Dec 17, 2024<br>
+                                Period: Last Quarter<br>
+                                Regions: All<br>
+                                Status: Final
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+    <script src="../../assets/js/main.js"></script>
+    <script>
+        $(document).ready(function() {
+            initializeCharts();
+            $('#metricsTable').DataTable({
+                pageLength: 10,
+                order: [[3, 'desc']]
+            });
+        });
+
+        function initializeCharts() {
+            // Performance Chart
+            const perfCtx = document.getElementById('performanceChart').getContext('2d');
+            new Chart(perfCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                    datasets: [{
+                        label: 'Innovation Rate',
+                        data: [65, 70, 68, 72, 75, 78],
+                        borderColor: '#4361ee'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+
+            // Regional Chart
+            const regCtx = document.getElementById('regionalChart').getContext('2d');
+            new Chart(regCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['APAC', 'EMEA', 'NA', 'LATAM'],
+                    datasets: [{
+                        label: 'Ideas Submitted',
+                        data: [120, 90, 85, 65],
+                        backgroundColor: '#4361ee'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+        }
+
+        function generateReport() {
+            // TODO: Implement report generation logic
+            alert('Generating report...');
+        }
+
+        function exportChart(type) {
+            // TODO: Implement chart export logic
+            alert(`Exporting ${type} chart...`);
+        }
+
+        function exportTable() {
+            // TODO: Implement table export logic
+            alert('Exporting table to Excel...');
+        }
+    </script>
+</body>
+</html>

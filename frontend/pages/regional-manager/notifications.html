@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notifications - IMS Connect</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../assets/css/style.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="dashboard.html">IMS Connect</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="dashboard.html">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="ideas-overview.html">Ideas Overview</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="team-performance.html">Team Performance</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="reports.html">Reports</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="resource-management.html">Resources</a>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center">
+                    <a href="notifications.html" class="btn btn-light me-2 position-relative active">
+                        <i class="fas fa-bell"></i>
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            5
+                            <span class="visually-hidden">unread notifications</span>
+                        </span>
+                    </a>
+                    <div class="dropdown">
+                        <button class="btn btn-light dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown">
+                            <i class="fas fa-user me-2"></i><span id="userName">Regional Manager</span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="profile.html">Profile</a></li>
+                            <li><a class="dropdown-item" href="settings.html">Settings</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#" id="logoutBtn">Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mt-4">
+        <!-- Notification Controls -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col-md-6">
+                        <h5 class="card-title mb-0">Notifications</h5>
+                    </div>
+                    <div class="col-md-6 text-md-end">
+                        <button class="btn btn-outline-primary me-2">
+                            <i class="fas fa-check-double me-1"></i>Mark All as Read
+                        </button>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown">
+                                <i class="fas fa-filter me-1"></i>Filter
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">All Notifications</a></li>
+                                <li><a class="dropdown-item" href="#">Unread</a></li>
+                                <li><a class="dropdown-item" href="#">Ideas</a></li>
+                                <li><a class="dropdown-item" href="#">Team Updates</a></li>
+                                <li><a class="dropdown-item" href="#">System</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Today's Notifications -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h6 class="mb-0">Today</h6>
+            </div>
+            <div class="list-group list-group-flush">
+                <div class="list-group-item list-group-item-action unread">
+                    <div class="d-flex w-100 justify-content-between align-items-center">
+                        <div>
+                            <h6 class="mb-1">New Idea Submission</h6>
+                            <p class="mb-1">Innovation Squad has submitted a new idea: "AI-Powered Customer Service"</p>
+                            <small class="text-muted">2 hours ago</small>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <span class="badge bg-primary me-2">New</span>
+                            <button class="btn btn-sm btn-outline-primary me-2">View</button>
+                            <button class="btn btn-sm btn-outline-secondary">
+                                <i class="fas fa-check"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="list-group-item list-group-item-action unread">
+                    <div class="d-flex w-100 justify-content-between align-items-center">
+                        <div>
+                            <h6 class="mb-1">Team Performance Alert</h6>
+                            <p class="mb-1">Development Team has exceeded their quarterly targets</p>
+                            <small class="text-muted">4 hours ago</small>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <span class="badge bg-success me-2">Performance</span>
+                            <button class="btn btn-sm btn-outline-primary me-2">View</button>
+                            <button class="btn btn-sm btn-outline-secondary">
+                                <i class="fas fa-check"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Yesterday's Notifications -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h6 class="mb-0">Yesterday</h6>
+            </div>
+            <div class="list-group list-group-flush">
+                <div class="list-group-item list-group-item-action">
+                    <div class="d-flex w-100 justify-content-between align-items-center">
+                        <div>
+                            <h6 class="mb-1">Resource Allocation Update</h6>
+                            <p class="mb-1">Budget allocation for Q1 2024 has been approved</p>
+                            <small class="text-muted">Yesterday at 3:45 PM</small>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <span class="badge bg-info me-2">Resource</span>
+                            <button class="btn btn-sm btn-outline-primary">View</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="list-group-item list-group-item-action">
+                    <div class="d-flex w-100 justify-content-between align-items-center">
+                        <div>
+                            <h6 class="mb-1">Implementation Milestone</h6>
+                            <p class="mb-1">Process Automation project has reached 75% completion</p>
+                            <small class="text-muted">Yesterday at 1:30 PM</small>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <span class="badge bg-warning me-2">Project</span>
+                            <button class="btn btn-sm btn-outline-primary">View</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Earlier Notifications -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h6 class="mb-0">Earlier</h6>
+            </div>
+            <div class="list-group list-group-flush">
+                <div class="list-group-item list-group-item-action">
+                    <div class="d-flex w-100 justify-content-between align-items-center">
+                        <div>
+                            <h6 class="mb-1">System Update</h6>
+                            <p class="mb-1">New features have been added to the reporting module</p>
+                            <small class="text-muted">2 days ago</small>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <span class="badge bg-secondary me-2">System</span>
+                            <button class="btn btn-sm btn-outline-primary">View</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="list-group-item list-group-item-action">
+                    <div class="d-flex w-100 justify-content-between align-items-center">
+                        <div>
+                            <h6 class="mb-1">Team Member Update</h6>
+                            <p class="mb-1">Sarah Johnson has been promoted to Team Lead</p>
+                            <small class="text-muted">3 days ago</small>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <span class="badge bg-primary me-2">Team</span>
+                            <button class="btn btn-sm btn-outline-primary">View</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Load More -->
+        <div class="text-center mb-4">
+            <button class="btn btn-outline-primary">
+                <i class="fas fa-sync-alt me-1"></i>Load More
+            </button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Handle marking individual notifications as read
+            $('.btn-outline-secondary').click(function() {
+                $(this).closest('.list-group-item').removeClass('unread');
+                $(this).remove();
+            });
+
+            // Handle marking all notifications as read
+            $('.btn-outline-primary').first().click(function() {
+                $('.list-group-item').removeClass('unread');
+                $('.list-group-item .btn-outline-secondary').remove();
+                updateNotificationCount();
+            });
+
+            // Update notification count
+            function updateNotificationCount() {
+                const unreadCount = $('.unread').length;
+                $('.badge-pill').text(unreadCount);
+                if (unreadCount === 0) {
+                    $('.badge-pill').hide();
+                }
+            }
+
+            // Handle notification filters
+            $('.dropdown-item').click(function(e) {
+                e.preventDefault();
+                const filter = $(this).text();
+                // Implement filtering logic here
+            });
+
+            // Handle load more
+            $('.btn-outline-primary').last().click(function() {
+                // Implement load more logic here
+                alert('Loading more notifications...');
+            });
+        });
+    </script>
+</body>
+</html>
