@@ -1,0 +1,188 @@
+# Project Overview
+
+The **ims-connect-django-react** project is a web application that combines a Django backend with a React frontend. It aims to facilitate collaboration and idea management among users, allowing them to create, vote on, and discuss ideas. The application is designed to enhance productivity and streamline the workflow of teams by providing a platform for idea generation and evaluation.
+
+## Key Features
+- User authentication and authorization using JWT.
+- CRUD operations for ideas, votes, comments, and documents.
+- Real-time notifications for user interactions.
+- Search functionality for ideas and users.
+- Role-based access control for different user types.
+
+# Installation Instructions
+
+To set up the backend locally, follow these steps:
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/yourusername/ims-connect-django-react.git
+   cd ims-connect-django-react/backend
+   ```
+2. **Create a virtual environment and activate it**:
+   ```bash
+   python3 -m venv venv
+   source venv/bin/activate
+   ```
+3. **Install the required packages**:
+   ```bash
+   pip install -r requirements.txt
+   ```
+4. **Set up the database** (make sure MySQL is running):
+   ```bash
+   python manage.py migrate
+   ```
+5. **Create a superuser** to access the admin panel:
+   ```bash
+   python manage.py createsuperuser
+   ```
+6. **Run the development server**:
+   ```bash
+   python manage.py runserver
+   ```
+
+## Troubleshooting
+- If you encounter issues with database connections, ensure that your MySQL server is running and that the credentials in your `.env` file are correct.
+- If you face any package installation errors, ensure that you have the correct version of Python and pip installed.
+
+# Configuration
+
+Key settings from `settings.py`:
+- **SECRET_KEY**: Managed through environment variables for security. This key is used for cryptographic signing and should be kept secret in production.
+- **DEBUG**: Set to `True` for development. In production, this should be set to `False` to prevent sensitive information from being exposed.
+- **ALLOWED_HOSTS**: Currently set to allow all hosts (`'*'`). This should be updated to include specific domains in production.
+- **CORS_ALLOWED_ORIGINS**: Configured to allow requests from specific local development addresses. This is important for enabling cross-origin requests from the frontend.
+- **DATABASES**: Uses MySQL as the database backend. Ensure that the database is created and the credentials are correct.
+
+# API Endpoints
+
+## User Endpoints
+- `GET /users/`: List all users.
+  - **Response**: A JSON array of user objects.
+- `POST /users/`: Create a new user.
+  - **Request Body**: JSON object with user details (username, password, etc.).
+  - **Response**: The created user object.
+
+## Idea Endpoints
+- `GET /ideas/`: List all ideas.
+  - **Response**: A JSON array of idea objects.
+- `POST /ideas/`: Create a new idea.
+  - **Request Body**: JSON object with idea details (title, description, etc.).
+  - **Response**: The created idea object.
+
+## Vote Endpoints
+- `GET /votes/`: List all votes.
+  - **Response**: A JSON array of vote objects.
+- `POST /votes/`: Create a new vote.
+  - **Request Body**: JSON object with vote details (user ID, idea ID, etc.).
+  - **Response**: The created vote object.
+
+## Team Endpoints
+- `GET /teams/`: List all teams.
+  - **Response**: A JSON array of team objects.
+- `POST /teams/`: Create a new team.
+  - **Request Body**: JSON object with team details (name, leader ID, etc.).
+  - **Response**: The created team object.
+
+## Document Endpoints
+- `GET /documents/`: List all documents.
+  - **Response**: A JSON array of document objects.
+- `POST /documents/`: Create a new document.
+  - **Request Body**: JSON object with document details (title, file, etc.).
+  - **Response**: The created document object.
+
+## Comment Endpoints
+- `GET /comments/`: List all comments.
+  - **Response**: A JSON array of comment objects.
+- `POST /comments/`: Create a new comment.
+  - **Request Body**: JSON object with comment details (user ID, idea ID, content, etc.).
+  - **Response**: The created comment object.
+
+## Audit Log Endpoints
+- `GET /audit-logs/`: List all audit logs.
+  - **Response**: A JSON array of audit log objects.
+- `POST /audit-logs/`: Create a new audit log.
+  - **Request Body**: JSON object with log details (user ID, action, etc.).
+  - **Response**: The created audit log object.
+
+## Notification Endpoints
+- `GET /notifications/`: List all notifications.
+  - **Response**: A JSON array of notification objects.
+- `POST /notifications/`: Create a new notification.
+  - **Request Body**: JSON object with notification details (user ID, message, etc.).
+  - **Response**: The created notification object.
+
+## Milestone Endpoints
+- `GET /milestones/`: List all milestones.
+  - **Response**: A JSON array of milestone objects.
+- `POST /milestones/`: Create a new milestone.
+  - **Request Body**: JSON object with milestone details (idea ID, title, due date, etc.).
+  - **Response**: The created milestone object.
+
+## Category Endpoints
+- `GET /categories/`: List all categories.
+  - **Response**: A JSON array of category objects.
+- `POST /categories/`: Create a new category.
+  - **Request Body**: JSON object with category details (name, description, etc.).
+  - **Response**: The created category object.
+
+## Search Endpoint
+- `GET /search/`: Search for items.
+  - **Request Parameters**: Query string for search terms.
+  - **Response**: A JSON array of matching items.
+
+## Token Management
+- `POST /token/`: Obtain a new JWT token.
+  - **Request Body**: JSON object with user credentials (username, password).
+  - **Response**: JWT token.
+- `POST /token/refresh/`: Refresh the JWT token.
+  - **Request Body**: JSON object with refresh token.
+  - **Response**: New JWT token.
+
+# View Logic
+
+Overview of viewsets and their methods:
+- **UserViewSet**: Handles user-related actions such as profile retrieval and statistics.
+  - **profile**: Retrieve user profile information.
+  - **statistics**: Get user statistics.
+  - **sync_offline_data**: Synchronize offline data.
+- **IdeaViewSet**: Manages ideas, including creation, retrieval, and voting.
+  - **my_ideas**: Retrieve ideas created by the user.
+  - **vote**: Vote on an idea.
+  - **similar_ideas**: Retrieve similar ideas.
+  - **recommended_collaborators**: Suggest collaborators for an idea.
+  - **trending**: Get trending ideas.
+- **VoteViewSet**: Handles voting actions.
+- **TeamViewSet**: Manages teams and their members.
+  - **add_member**: Add a member to the team.
+  - **remove_member**: Remove a member from the team.
+- **DocumentViewSet**: Handles document uploads related to ideas.
+- **CommentViewSet**: Manages comments on ideas.
+- **NotificationViewSet**: Handles notifications for users.
+- **MilestoneViewSet**: Manages milestones related to ideas.
+- **CategoryViewSet**: Handles categories for organizing ideas.
+- **AuditLogViewSet**: Manages audit logs for tracking actions.
+
+# Models
+
+Overview of models:
+- **User**: Represents application users with roles and expertise.
+- **Idea**: Represents ideas submitted by users, including fields for title, description, and status.
+- **Vote**: Represents votes cast by users on ideas, linking users and ideas.
+- **Team**: Represents teams working on ideas, including team members and leaders.
+- **Document**: Represents documents related to ideas, including file uploads.
+- **Comment**: Represents comments on ideas, allowing for discussions.
+- **Notification**: Represents notifications sent to users for various actions.
+- **Milestone**: Represents milestones associated with ideas, tracking progress.
+- **Category**: Represents categories for organizing ideas, allowing for better categorization.
+- **AuditLog**: Represents logs of user actions for accountability and tracking.
+
+# Authentication
+
+JWT authentication is implemented using `rest_framework_simplejwt`. Tokens are issued upon user login and can be refreshed using the refresh endpoint. This ensures secure access to the API.
+
+# Testing
+
+To run tests, use the following command:
+```bash
+python manage.py test
+```
+This will execute all test cases defined in the application, ensuring that all functionalities work as expected.
