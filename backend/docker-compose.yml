@@ -5,12 +5,12 @@ services:
     image: mysql:8.0
     restart: always
     environment:
-      MYSQL_DATABASE: mydatabase
-      MYSQL_USER: user
-      MYSQL_PASSWORD: password
-      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: imsc_ims_connect
+      MYSQL_USER: imsc_root
+      MYSQL_PASSWORD: 1212
+      MYSQL_ROOT_PASSWORD: new_root_password  # Set your new root password here
     ports:
-      - "3307:3306"  # Change the host port to 3307
+      - "3307:3306"
 
   web:
     build: .
@@ -22,8 +22,19 @@ services:
     depends_on:
       - db
     environment:
-      - DB_NAME=mydatabase
-      - DB_USER=user
-      - DB_PASSWORD=password
+      - DB_NAME=imsc_ims_connect
+      - DB_USER=imsc_root
+      - DB_PASSWORD=1212
       - DB_HOST=db
       - DB_PORT=3306
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    environment:
+      PMA_HOST: db
+      MYSQL_ROOT_PASSWORD: new_root_password  # Use the same new root password here
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
