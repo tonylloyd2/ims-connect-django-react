@@ -109,12 +109,12 @@ function handleLogin() {
 
     // API call to login
     $.ajax({
-        url: '/api/auth/login',
+        url: `${API_BASE_URL}/api/token/`,
         method: 'POST',
         contentType: 'application/json',
         data: JSON.stringify({ email, password }),
         success: function(response) {
-            localStorage.setItem('access_token', response.token);
+            localStorage.setItem('access_token', response.access);
             localStorage.setItem('user', JSON.stringify(response.user));
             window.location.href = '/pages/dashboard.html';
         },
@@ -201,7 +201,7 @@ function handleRegistration() {
 
     // API call to register
     $.ajax({
-        url: '/api/auth/register',
+        url: `${API_BASE_URL}/api/auth/register`,
         method: 'POST',
         contentType: 'application/json',
         data: JSON.stringify(userData),
