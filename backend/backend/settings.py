@@ -78,6 +78,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+        'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = "backend.urls"
@@ -190,3 +191,6 @@ CHANNEL_LAYERS = {
 # CORS settings
 CORS_ALLOW_ALL_ORIGINS = True  # For development only, configure properly for production
 CORS_ALLOW_CREDENTIALS = True
+
+# Configure WhiteNoise to serve static files
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
