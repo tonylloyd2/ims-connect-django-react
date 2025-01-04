@@ -17,7 +17,7 @@ RUN python manage.py collectstatic --noinput
 EXPOSE 8801
 
 # Define environment variable
-ENV DJANGO_SETTINGS_MODULE=myproject.settings
+ENV DJANGO_SETTINGS_MODULE=backend.settings
 
 # Run gunicorn server
-CMD ["gunicorn", "--bind", "0.0.0.0:8801", "myproject.wsgi:application"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8801", "backend.wsgi:application"]
