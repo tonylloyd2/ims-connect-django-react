@@ -90,8 +90,8 @@ DATABASES = {
         'NAME': os.getenv('DB_NAME', 'imsc_ims_connect'),
         'USER': os.getenv('DB_USER', 'imsc_root'),
         'PASSWORD': os.getenv('DB_PASSWORD', '1212'),
-        'HOST': os.getenv('DB_HOST', 'localhost'),
-        'PORT': os.getenv('DB_PORT', '3306'),
+        'HOST': 'db',  # This should be 'db', the service name defined in docker-compose.yml
+        'PORT': '3306',
         'OPTIONS': {
             'charset': 'utf8mb4',
             'use_unicode': True,
