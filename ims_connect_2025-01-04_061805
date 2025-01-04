@@ -1,0 +1,665 @@
+-- MySQL dump 10.13  Distrib 5.7.24, for Linux (x86_64)
+--
+-- Host: 127.0.0.1    Database: ims_connect
+-- ------------------------------------------------------
+-- Server version	11.4.3-MariaDB-1
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `api_auditlog`
+--
+
+DROP TABLE IF EXISTS `api_auditlog`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `api_auditlog` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `action` varchar(50) NOT NULL,
+  `details` longtext NOT NULL,
+  `timestamp` datetime(6) NOT NULL,
+  `ip_address` char(39) DEFAULT NULL,
+  `user_id` bigint(20) NOT NULL,
+  `idea_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `api_auditlog_user_id_b15d4175_fk_api_user_id` (`user_id`),
+  KEY `api_auditlog_idea_id_28e8db25_fk_api_idea_id` (`idea_id`),
+  CONSTRAINT `api_auditlog_idea_id_28e8db25_fk_api_idea_id` FOREIGN KEY (`idea_id`) REFERENCES `api_idea` (`id`),
+  CONSTRAINT `api_auditlog_user_id_b15d4175_fk_api_user_id` FOREIGN KEY (`user_id`) REFERENCES `api_user` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `api_auditlog`
+--
+
+/*!40000 ALTER TABLE `api_auditlog` DISABLE KEYS */;
+INSERT INTO `api_auditlog` VALUES (1,'test','user action','2024-12-16 19:39:16.579247','123.23.44.55',2,2),(2,'create','Created new idea: efv','2024-12-17 14:40:27.161679',NULL,3,4),(3,'create','Created new idea: efv','2024-12-17 14:40:29.078579',NULL,3,5),(4,'create','Created new idea: this is a new idea','2024-12-17 15:33:50.310322',NULL,5,6);
+/*!40000 ALTER TABLE `api_auditlog` ENABLE KEYS */;
+
+--
+-- Table structure for table `api_category`
+--
+
+DROP TABLE IF EXISTS `api_category`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `api_category` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `description` longtext NOT NULL,
+  `parent_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `api_category_parent_id_714127a8_fk_api_category_id` (`parent_id`),
+  CONSTRAINT `api_category_parent_id_714127a8_fk_api_category_id` FOREIGN KEY (`parent_id`) REFERENCES `api_category` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `api_category`
+--
+
+/*!40000 ALTER TABLE `api_category` DISABLE KEYS */;
+INSERT INTO `api_category` VALUES (1,'rutp','qwef23f 2fn23ifne q34fo3new',NULL),(2,'sudoer','awfvqw;enfw qwefnwekvwe fqwekfnwekf wefqkwev nwv',1),(3,'tech','wefdsavwev',NULL);
+/*!40000 ALTER TABLE `api_category` ENABLE KEYS */;
+
+--
+-- Table structure for table `api_chatmessage`
+--
+
+DROP TABLE IF EXISTS `api_chatmessage`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `api_chatmessage` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `content` longtext NOT NULL,
+  `created_at` datetime(6) NOT NULL,
+  `is_system_message` tinyint(1) NOT NULL,
+  `team_id` bigint(20) NOT NULL,
+  `user_id` bigint(20) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `api_chatmessage_team_id_a4eee06a_fk_api_team_id` (`team_id`),
+  KEY `api_chatmessage_user_id_f447108a_fk_api_user_id` (`user_id`),
+  CONSTRAINT `api_chatmessage_team_id_a4eee06a_fk_api_team_id` FOREIGN KEY (`team_id`) REFERENCES `api_team` (`id`),
+  CONSTRAINT `api_chatmessage_user_id_f447108a_fk_api_user_id` FOREIGN KEY (`user_id`) REFERENCES `api_user` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `api_chatmessage`
+--
+
+/*!40000 ALTER TABLE `api_chatmessage` DISABLE KEYS */;
+INSERT INTO `api_chatmessage` VALUES (1,'awegeaqe','2025-01-02 23:29:18.821406',0,1,2);
+/*!40000 ALTER TABLE `api_chatmessage` ENABLE KEYS */;
+
+--
+-- Table structure for table `api_comment`
+--
+
+DROP TABLE IF EXISTS `api_comment`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `api_comment` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `content` longtext NOT NULL,
+  `created_at` datetime(6) NOT NULL,
+  `updated_at` datetime(6) NOT NULL,
+  `parent_id` bigint(20) DEFAULT NULL,
+  `user_id` bigint(20) NOT NULL,
+  `idea_id` bigint(20) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `api_comment_parent_id_d7c571ff_fk_api_comment_id` (`parent_id`),
+  KEY `api_comment_user_id_14315666_fk_api_user_id` (`user_id`),
+  KEY `api_comment_idea_id_5ee39ddc_fk_api_idea_id` (`idea_id`),
+  CONSTRAINT `api_comment_idea_id_5ee39ddc_fk_api_idea_id` FOREIGN KEY (`idea_id`) REFERENCES `api_idea` (`id`),
+  CONSTRAINT `api_comment_parent_id_d7c571ff_fk_api_comment_id` FOREIGN KEY (`parent_id`) REFERENCES `api_comment` (`id`),
+  CONSTRAINT `api_comment_user_id_14315666_fk_api_user_id` FOREIGN KEY (`user_id`) REFERENCES `api_user` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `api_comment`
+--
+
+/*!40000 ALTER TABLE `api_comment` DISABLE KEYS */;
+INSERT INTO `api_comment` VALUES (1,'awtefsd','2025-01-02 23:28:43.388127','2025-01-02 23:28:43.388232',NULL,5,2),(2,'awgsdva','2025-01-02 23:28:47.082504','2025-01-02 23:28:47.082586',1,6,1);
+/*!40000 ALTER TABLE `api_comment` ENABLE KEYS */;
+
+--
+-- Table structure for table `api_document`
+--
+
+DROP TABLE IF EXISTS `api_document`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `api_document` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `title` varchar(200) NOT NULL,
+  `file` varchar(100) NOT NULL,
+  `document_type` varchar(20) NOT NULL,
+  `uploaded_at` datetime(6) NOT NULL,
+  `version` varchar(20) NOT NULL,
+  `uploaded_by_id` bigint(20) NOT NULL,
+  `idea_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `api_document_uploaded_by_id_005dc346_fk_api_user_id` (`uploaded_by_id`),
+  KEY `api_document_idea_id_5ebefa01_fk_api_idea_id` (`idea_id`),
+  CONSTRAINT `api_document_idea_id_5ebefa01_fk_api_idea_id` FOREIGN KEY (`idea_id`) REFERENCES `api_idea` (`id`),
+  CONSTRAINT `api_document_uploaded_by_id_005dc346_fk_api_user_id` FOREIGN KEY (`uploaded_by_id`) REFERENCES `api_user` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `api_document`
+--
+
+/*!40000 ALTER TABLE `api_document` DISABLE KEYS */;
+/*!40000 ALTER TABLE `api_document` ENABLE KEYS */;
+
+--
+-- Table structure for table `api_idea`
+--
+
+DROP TABLE IF EXISTS `api_idea`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `api_idea` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `title` varchar(200) NOT NULL,
+  `description` longtext NOT NULL,
+  `tags` longtext NOT NULL,
+  `status` varchar(20) NOT NULL,
+  `created_at` datetime(6) NOT NULL,
+  `updated_at` datetime(6) NOT NULL,
+  `impact_score` double NOT NULL,
+  `implementation_cost` decimal(10,2) DEFAULT NULL,
+  `estimated_time` bigint(20) DEFAULT NULL,
+  `creator_id` bigint(20) NOT NULL,
+  `is_cross_regional` tinyint(1) NOT NULL,
+  `required_expertise` longtext NOT NULL,
+  `category_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `api_idea_creator_id_b8e8e011_fk_api_user_id` (`creator_id`),
+  KEY `api_idea_category_id_e067511b_fk_api_category_id` (`category_id`),
+  CONSTRAINT `api_idea_category_id_e067511b_fk_api_category_id` FOREIGN KEY (`category_id`) REFERENCES `api_category` (`id`),
+  CONSTRAINT `api_idea_creator_id_b8e8e011_fk_api_user_id` FOREIGN KEY (`creator_id`) REFERENCES `api_user` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `api_idea`
+--
+
+/*!40000 ALTER TABLE `api_idea` DISABLE KEYS */;
+INSERT INTO `api_idea` VALUES (1,'init','were','[super]','draft','2024-12-16 19:38:46.839117','2024-12-16 19:38:46.839146',0,456.03,345000000,1,0,'[]',NULL),(2,'WFWEF','ELRGVNQWGQ WEKGNVKQ GQWEKLGNDVQWE GFQWOEKGNDVKQWNGQ','[SERG]','submitted','2024-12-17 13:21:13.789034','2024-12-17 13:21:13.789114',0,345.00,2000000,3,1,'[3ERGE]',2),(3,'RGERG','AWRGA','[]','approved','2024-12-17 13:35:39.599100','2024-12-17 14:14:13.921481',0,33.00,345000000,3,1,'[SDF]',1),(4,'efv','<p><i>aefvaefd </i><br></p>','[]','submitted','2024-12-17 14:40:27.153961','2024-12-17 14:40:27.154124',0,NULL,NULL,3,0,'[]',NULL),(5,'efv','<p><i>aefvaefd </i><br></p>','[]','submitted','2024-12-17 14:40:29.073731','2024-12-17 14:40:29.073871',0,NULL,NULL,3,0,'[]',NULL),(6,'this is a new idea','<p><a href=\"http://cyberpunkmania.com\" target=\"_blank\">sample link</a></p><p>avasdvwvsa</p><p>w</p><p>avsdv asdv<br><br></p>','[]','approved','2024-12-17 15:33:50.305440','2024-12-17 15:36:33.148279',0,NULL,NULL,5,0,'[]',3);
+/*!40000 ALTER TABLE `api_idea` ENABLE KEYS */;
+
+--
+-- Table structure for table `api_milestone`
+--
+
+DROP TABLE IF EXISTS `api_milestone`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `api_milestone` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `title` varchar(200) NOT NULL,
+  `description` longtext NOT NULL,
+  `due_date` datetime(6) NOT NULL,
+  `completed` tinyint(1) NOT NULL,
+  `completed_at` datetime(6) DEFAULT NULL,
+  `idea_id` bigint(20) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `api_milestone_idea_id_0c808395_fk_api_idea_id` (`idea_id`),
+  CONSTRAINT `api_milestone_idea_id_0c808395_fk_api_idea_id` FOREIGN KEY (`idea_id`) REFERENCES `api_idea` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `api_milestone`
+--
+
+/*!40000 ALTER TABLE `api_milestone` DISABLE KEYS */;
+/*!40000 ALTER TABLE `api_milestone` ENABLE KEYS */;
+
+--
+-- Table structure for table `api_notification`
+--
+
+DROP TABLE IF EXISTS `api_notification`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `api_notification` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `type` varchar(50) NOT NULL,
+  `message` longtext NOT NULL,
+  `created_at` datetime(6) NOT NULL,
+  `read` tinyint(1) NOT NULL,
+  `related_idea_id` bigint(20) DEFAULT NULL,
+  `user_id` bigint(20) NOT NULL,
+  `related_team_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `api_notification_related_idea_id_dfae11e0_fk_api_idea_id` (`related_idea_id`),
+  KEY `api_notification_user_id_6cede59e_fk_api_user_id` (`user_id`),
+  KEY `api_notification_related_team_id_a8529011_fk_api_team_id` (`related_team_id`),
+  CONSTRAINT `api_notification_related_idea_id_dfae11e0_fk_api_idea_id` FOREIGN KEY (`related_idea_id`) REFERENCES `api_idea` (`id`),
+  CONSTRAINT `api_notification_related_team_id_a8529011_fk_api_team_id` FOREIGN KEY (`related_team_id`) REFERENCES `api_team` (`id`),
+  CONSTRAINT `api_notification_user_id_6cede59e_fk_api_user_id` FOREIGN KEY (`user_id`) REFERENCES `api_user` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `api_notification`
+--
+
+/*!40000 ALTER TABLE `api_notification` DISABLE KEYS */;
+/*!40000 ALTER TABLE `api_notification` ENABLE KEYS */;
+
+--
+-- Table structure for table `api_team`
+--
+
+DROP TABLE IF EXISTS `api_team`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `api_team` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `created_at` datetime(6) NOT NULL,
+  `idea_id` bigint(20) NOT NULL,
+  `leader_id` bigint(20) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `idea_id` (`idea_id`),
+  KEY `api_team_leader_id_9d22c28a_fk_api_user_id` (`leader_id`),
+  CONSTRAINT `api_team_idea_id_38ca04cc_fk_api_idea_id` FOREIGN KEY (`idea_id`) REFERENCES `api_idea` (`id`),
+  CONSTRAINT `api_team_leader_id_9d22c28a_fk_api_user_id` FOREIGN KEY (`leader_id`) REFERENCES `api_user` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `api_team`
+--
+
+/*!40000 ALTER TABLE `api_team` DISABLE KEYS */;
+INSERT INTO `api_team` VALUES (1,'qfgw','2024-12-17 14:19:09.912527',1,3);
+/*!40000 ALTER TABLE `api_team` ENABLE KEYS */;
+
+--
+-- Table structure for table `api_team_members`
+--
+
+DROP TABLE IF EXISTS `api_team_members`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `api_team_members` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `team_id` bigint(20) NOT NULL,
+  `user_id` bigint(20) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `api_team_members_team_id_user_id_e508bdd0_uniq` (`team_id`,`user_id`),
+  KEY `api_team_members_user_id_bba82ebd_fk_api_user_id` (`user_id`),
+  CONSTRAINT `api_team_members_team_id_33fd7c51_fk_api_team_id` FOREIGN KEY (`team_id`) REFERENCES `api_team` (`id`),
+  CONSTRAINT `api_team_members_user_id_bba82ebd_fk_api_user_id` FOREIGN KEY (`user_id`) REFERENCES `api_user` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `api_team_members`
+--
+
+/*!40000 ALTER TABLE `api_team_members` DISABLE KEYS */;
+INSERT INTO `api_team_members` VALUES (1,1,1),(2,1,2),(3,1,3);
+/*!40000 ALTER TABLE `api_team_members` ENABLE KEYS */;
+
+--
+-- Table structure for table `api_user`
+--
+
+DROP TABLE IF EXISTS `api_user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `api_user` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `password` varchar(128) NOT NULL,
+  `last_login` datetime(6) DEFAULT NULL,
+  `is_superuser` tinyint(1) NOT NULL,
+  `username` varchar(150) NOT NULL,
+  `first_name` varchar(150) NOT NULL,
+  `last_name` varchar(150) NOT NULL,
+  `email` varchar(254) NOT NULL,
+  `is_staff` tinyint(1) NOT NULL,
+  `is_active` tinyint(1) NOT NULL,
+  `date_joined` datetime(6) NOT NULL,
+  `role` varchar(20) NOT NULL,
+  `region` varchar(100) DEFAULT NULL,
+  `department` varchar(100) NOT NULL,
+  `points` int(11) NOT NULL,
+  `expertise` longtext NOT NULL,
+  `offline_data` longtext DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `username` (`username`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `api_user`
+--
+
+/*!40000 ALTER TABLE `api_user` DISABLE KEYS */;
+INSERT INTO `api_user` VALUES (1,'pbkdf2_sha256$720000$RHmz3MAJo5SQMFp4CIclPe$GRMzdAHLFkF7kOTGmTtZUouI2Xi6FceppkncxMXAQxo=','2024-12-17 14:17:54.689021',1,'lloyd','','','lloydkatila@gmail.com',1,1,'2024-12-16 19:21:36.910229','employee',NULL,'',0,'[]',NULL),(2,'pbkdf2_sha256$720000$ZSIowvJWO3sBVtQXWOhcH0$0TNbscHcV1/3cNE72c8zwIy0Q8Jk0dPcnDLBC47c5eg=',NULL,0,'root','','','',0,1,'2024-12-16 19:37:13.213002','employee',NULL,'',0,'[]',NULL),(3,'pbkdf2_sha256$720000$hCR8XBsdwyHNFjFE5c8WRp$m2SF1sOLVGSeWd+X60taAhwy9XqdUxUyMIdNj3NyV0I=',NULL,1,'tester','','','test@gmail.com',1,1,'2024-12-17 06:05:36.839227','employee',NULL,'',0,'[]',NULL),(4,'pbkdf2_sha256$720000$heeonliyBpNArdf90f62y9$1pcPnSK3EMCXs7hkit+nK6K2/Ssoo9B3Z1kJPI0o7I4=','2024-12-17 15:22:49.184157',1,'sudo','','','sudo@gmail.com',1,1,'2024-12-17 15:21:35.093338','employee',NULL,'',0,'[]',NULL),(5,'pbkdf2_sha256$720000$UFxNZMvTFltDPSC89pDDnZ$w0QUnHJ/7Ss0b/wAdvaPpRvCxYnXgzjlGZMCWic1rJY=',NULL,0,'employee-test','suwef','wef','qfe@dd.dd',1,1,'2024-12-17 15:29:52.000000','employee','north','tech',359,'[]',NULL),(6,'pbkdf2_sha256$720000$DPs0VhjLMSJmDEmWyTgHPV$RIeYqzkTCNdv7SRrc7hp8RWzAJ929y2U7fmO1P/E9AU=','2025-01-02 23:32:44.715993',1,'admin-user','','','admin@gmail.com',1,1,'2025-01-02 23:03:00.798388','employee',NULL,'',0,'[]',NULL);
+/*!40000 ALTER TABLE `api_user` ENABLE KEYS */;
+
+--
+-- Table structure for table `api_user_groups`
+--
+
+DROP TABLE IF EXISTS `api_user_groups`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `api_user_groups` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) NOT NULL,
+  `group_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `api_user_groups_user_id_group_id_9c7ddfb5_uniq` (`user_id`,`group_id`),
+  KEY `api_user_groups_group_id_3af85785_fk_auth_group_id` (`group_id`),
+  CONSTRAINT `api_user_groups_group_id_3af85785_fk_auth_group_id` FOREIGN KEY (`group_id`) REFERENCES `auth_group` (`id`),
+  CONSTRAINT `api_user_groups_user_id_a5ff39fa_fk_api_user_id` FOREIGN KEY (`user_id`) REFERENCES `api_user` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `api_user_groups`
+--
+
+/*!40000 ALTER TABLE `api_user_groups` DISABLE KEYS */;
+/*!40000 ALTER TABLE `api_user_groups` ENABLE KEYS */;
+
+--
+-- Table structure for table `api_user_user_permissions`
+--
+
+DROP TABLE IF EXISTS `api_user_user_permissions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `api_user_user_permissions` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) NOT NULL,
+  `permission_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `api_user_user_permissions_user_id_permission_id_a06dd704_uniq` (`user_id`,`permission_id`),
+  KEY `api_user_user_permis_permission_id_305b7fea_fk_auth_perm` (`permission_id`),
+  CONSTRAINT `api_user_user_permis_permission_id_305b7fea_fk_auth_perm` FOREIGN KEY (`permission_id`) REFERENCES `auth_permission` (`id`),
+  CONSTRAINT `api_user_user_permissions_user_id_f3945d65_fk_api_user_id` FOREIGN KEY (`user_id`) REFERENCES `api_user` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `api_user_user_permissions`
+--
+
+/*!40000 ALTER TABLE `api_user_user_permissions` DISABLE KEYS */;
+/*!40000 ALTER TABLE `api_user_user_permissions` ENABLE KEYS */;
+
+--
+-- Table structure for table `api_vote`
+--
+
+DROP TABLE IF EXISTS `api_vote`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `api_vote` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `created_at` datetime(6) NOT NULL,
+  `value` int(11) NOT NULL,
+  `idea_id` bigint(20) NOT NULL,
+  `user_id` bigint(20) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `api_vote_user_id_idea_id_053eecbd_uniq` (`user_id`,`idea_id`),
+  KEY `api_vote_idea_id_d877eeff_fk_api_idea_id` (`idea_id`),
+  CONSTRAINT `api_vote_idea_id_d877eeff_fk_api_idea_id` FOREIGN KEY (`idea_id`) REFERENCES `api_idea` (`id`),
+  CONSTRAINT `api_vote_user_id_4aa42537_fk_api_user_id` FOREIGN KEY (`user_id`) REFERENCES `api_user` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `api_vote`
+--
+
+/*!40000 ALTER TABLE `api_vote` DISABLE KEYS */;
+INSERT INTO `api_vote` VALUES (1,'2024-12-17 14:19:25.510236',1,2,1);
+/*!40000 ALTER TABLE `api_vote` ENABLE KEYS */;
+
+--
+-- Table structure for table `auth_group`
+--
+
+DROP TABLE IF EXISTS `auth_group`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `auth_group` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(150) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `auth_group`
+--
+
+/*!40000 ALTER TABLE `auth_group` DISABLE KEYS */;
+INSERT INTO `auth_group` VALUES (1,'admins');
+/*!40000 ALTER TABLE `auth_group` ENABLE KEYS */;
+
+--
+-- Table structure for table `auth_group_permissions`
+--
+
+DROP TABLE IF EXISTS `auth_group_permissions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `auth_group_permissions` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `group_id` int(11) NOT NULL,
+  `permission_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `auth_group_permissions_group_id_permission_id_0cd325b0_uniq` (`group_id`,`permission_id`),
+  KEY `auth_group_permissio_permission_id_84c5c92e_fk_auth_perm` (`permission_id`),
+  CONSTRAINT `auth_group_permissio_permission_id_84c5c92e_fk_auth_perm` FOREIGN KEY (`permission_id`) REFERENCES `auth_permission` (`id`),
+  CONSTRAINT `auth_group_permissions_group_id_b120cbf9_fk_auth_group_id` FOREIGN KEY (`group_id`) REFERENCES `auth_group` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=65 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `auth_group_permissions`
+--
+
+/*!40000 ALTER TABLE `auth_group_permissions` DISABLE KEYS */;
+INSERT INTO `auth_group_permissions` VALUES (1,1,1),(2,1,2),(3,1,3),(4,1,4),(5,1,5),(6,1,6),(7,1,7),(8,1,8),(9,1,9),(10,1,10),(11,1,11),(12,1,12),(13,1,13),(14,1,14),(15,1,15),(16,1,16),(17,1,17),(18,1,18),(19,1,19),(20,1,20),(21,1,21),(22,1,22),(23,1,23),(24,1,24),(25,1,25),(26,1,26),(27,1,27),(28,1,28),(29,1,29),(30,1,30),(31,1,31),(32,1,32),(33,1,33),(34,1,34),(35,1,35),(36,1,36),(37,1,37),(38,1,38),(39,1,39),(40,1,40),(41,1,41),(42,1,42),(43,1,43),(44,1,44),(45,1,45),(46,1,46),(47,1,47),(48,1,48),(49,1,49),(50,1,50),(51,1,51),(52,1,52),(53,1,53),(54,1,54),(55,1,55),(56,1,56),(57,1,57),(58,1,58),(59,1,59),(60,1,60),(61,1,61),(62,1,62),(63,1,63),(64,1,64);
+/*!40000 ALTER TABLE `auth_group_permissions` ENABLE KEYS */;
+
+--
+-- Table structure for table `auth_permission`
+--
+
+DROP TABLE IF EXISTS `auth_permission`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `auth_permission` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `content_type_id` int(11) NOT NULL,
+  `codename` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `auth_permission_content_type_id_codename_01ab375a_uniq` (`content_type_id`,`codename`),
+  CONSTRAINT `auth_permission_content_type_id_2f476e4b_fk_django_co` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=65 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `auth_permission`
+--
+
+/*!40000 ALTER TABLE `auth_permission` DISABLE KEYS */;
+INSERT INTO `auth_permission` VALUES (1,'Can add log entry',1,'add_logentry'),(2,'Can change log entry',1,'change_logentry'),(3,'Can delete log entry',1,'delete_logentry'),(4,'Can view log entry',1,'view_logentry'),(5,'Can add permission',2,'add_permission'),(6,'Can change permission',2,'change_permission'),(7,'Can delete permission',2,'delete_permission'),(8,'Can view permission',2,'view_permission'),(9,'Can add group',3,'add_group'),(10,'Can change group',3,'change_group'),(11,'Can delete group',3,'delete_group'),(12,'Can view group',3,'view_group'),(13,'Can add content type',4,'add_contenttype'),(14,'Can change content type',4,'change_contenttype'),(15,'Can delete content type',4,'delete_contenttype'),(16,'Can view content type',4,'view_contenttype'),(17,'Can add session',5,'add_session'),(18,'Can change session',5,'change_session'),(19,'Can delete session',5,'delete_session'),(20,'Can view session',5,'view_session'),(21,'Can add user',6,'add_user'),(22,'Can change user',6,'change_user'),(23,'Can delete user',6,'delete_user'),(24,'Can view user',6,'view_user'),(25,'Can add idea',7,'add_idea'),(26,'Can change idea',7,'change_idea'),(27,'Can delete idea',7,'delete_idea'),(28,'Can view idea',7,'view_idea'),(29,'Can add document',8,'add_document'),(30,'Can change document',8,'change_document'),(31,'Can delete document',8,'delete_document'),(32,'Can view document',8,'view_document'),(33,'Can add comment',9,'add_comment'),(34,'Can change comment',9,'change_comment'),(35,'Can delete comment',9,'delete_comment'),(36,'Can view comment',9,'view_comment'),(37,'Can add audit log',10,'add_auditlog'),(38,'Can change audit log',10,'change_auditlog'),(39,'Can delete audit log',10,'delete_auditlog'),(40,'Can view audit log',10,'view_auditlog'),(41,'Can add milestone',11,'add_milestone'),(42,'Can change milestone',11,'change_milestone'),(43,'Can delete milestone',11,'delete_milestone'),(44,'Can view milestone',11,'view_milestone'),(45,'Can add team',12,'add_team'),(46,'Can change team',12,'change_team'),(47,'Can delete team',12,'delete_team'),(48,'Can view team',12,'view_team'),(49,'Can add notification',13,'add_notification'),(50,'Can change notification',13,'change_notification'),(51,'Can delete notification',13,'delete_notification'),(52,'Can view notification',13,'view_notification'),(53,'Can add vote',14,'add_vote'),(54,'Can change vote',14,'change_vote'),(55,'Can delete vote',14,'delete_vote'),(56,'Can view vote',14,'view_vote'),(57,'Can add category',15,'add_category'),(58,'Can change category',15,'change_category'),(59,'Can delete category',15,'delete_category'),(60,'Can view category',15,'view_category'),(61,'Can add chat message',16,'add_chatmessage'),(62,'Can change chat message',16,'change_chatmessage'),(63,'Can delete chat message',16,'delete_chatmessage'),(64,'Can view chat message',16,'view_chatmessage');
+/*!40000 ALTER TABLE `auth_permission` ENABLE KEYS */;
+
+--
+-- Table structure for table `django_admin_log`
+--
+
+DROP TABLE IF EXISTS `django_admin_log`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `django_admin_log` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `action_time` datetime(6) NOT NULL,
+  `object_id` longtext DEFAULT NULL,
+  `object_repr` varchar(200) NOT NULL,
+  `action_flag` smallint(5) unsigned NOT NULL CHECK (`action_flag` >= 0),
+  `change_message` longtext NOT NULL,
+  `content_type_id` int(11) DEFAULT NULL,
+  `user_id` bigint(20) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `django_admin_log_content_type_id_c4bce8eb_fk_django_co` (`content_type_id`),
+  KEY `django_admin_log_user_id_c564eba6_fk_api_user_id` (`user_id`),
+  CONSTRAINT `django_admin_log_content_type_id_c4bce8eb_fk_django_co` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`),
+  CONSTRAINT `django_admin_log_user_id_c564eba6_fk_api_user_id` FOREIGN KEY (`user_id`) REFERENCES `api_user` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `django_admin_log`
+--
+
+/*!40000 ALTER TABLE `django_admin_log` DISABLE KEYS */;
+INSERT INTO `django_admin_log` VALUES (1,'2024-12-16 19:37:13.650960','2','root',1,'[{\"added\": {}}]',6,1),(2,'2024-12-16 19:38:46.840128','1','Idea object (1)',1,'[{\"added\": {}}]',7,1),(3,'2024-12-16 19:39:16.582419','1','AuditLog object (1)',1,'[{\"added\": {}}]',10,1),(4,'2024-12-17 06:04:03.476645','1','admins',1,'[{\"added\": {}}]',3,1),(5,'2024-12-17 13:05:59.973951','1','rutp',1,'[{\"added\": {}}]',15,1),(6,'2024-12-17 13:06:08.857443','2','sudoer',1,'[{\"added\": {}}]',15,1),(7,'2024-12-17 13:21:13.791821','2','Idea object (2)',1,'[{\"added\": {}}]',7,1),(8,'2024-12-17 13:35:39.602415','3','Idea object (3)',1,'[{\"added\": {}}]',7,1),(9,'2024-12-17 14:14:13.932818','3','Idea object (3)',2,'[{\"changed\": {\"fields\": [\"Status\"]}}]',7,1),(10,'2024-12-17 14:18:22.936375','1','AuditLog object (1)',2,'[{\"changed\": {\"fields\": [\"Idea\"]}}]',10,1),(11,'2024-12-17 14:19:09.923549','1','Team object (1)',1,'[{\"added\": {}}]',12,1),(12,'2024-12-17 14:19:25.511848','1','Vote object (1)',1,'[{\"added\": {}}]',14,1),(13,'2024-12-17 14:21:08.957377','3','tech',1,'[{\"added\": {}}]',15,1),(14,'2024-12-17 15:29:55.011052','5','employee-test',1,'[{\"added\": {}}]',6,4),(15,'2024-12-17 15:30:45.220919','5','employee-test',2,'[{\"changed\": {\"fields\": [\"First name\", \"Last name\", \"Email address\", \"Staff status\", \"Region\", \"Department\", \"Points\"]}}]',6,4),(16,'2024-12-17 15:34:29.279231','6','Idea object (6)',2,'[{\"changed\": {\"fields\": [\"Status\", \"Category\"]}}]',7,4),(17,'2024-12-17 15:36:33.151664','6','Idea object (6)',2,'[{\"changed\": {\"fields\": [\"Status\"]}}]',7,4),(18,'2025-01-02 23:28:43.390451','1','Comment object (1)',1,'[{\"added\": {}}]',9,6),(19,'2025-01-02 23:28:47.084555','2','Comment object (2)',1,'[{\"added\": {}}]',9,6),(20,'2025-01-02 23:29:18.823747','1','ChatMessage object (1)',1,'[{\"added\": {}}]',16,6);
+/*!40000 ALTER TABLE `django_admin_log` ENABLE KEYS */;
+
+--
+-- Table structure for table `django_content_type`
+--
+
+DROP TABLE IF EXISTS `django_content_type`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `django_content_type` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `app_label` varchar(100) NOT NULL,
+  `model` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `django_content_type_app_label_model_76bd3d3b_uniq` (`app_label`,`model`)
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `django_content_type`
+--
+
+/*!40000 ALTER TABLE `django_content_type` DISABLE KEYS */;
+INSERT INTO `django_content_type` VALUES (1,'admin','logentry'),(10,'api','auditlog'),(15,'api','category'),(16,'api','chatmessage'),(9,'api','comment'),(8,'api','document'),(7,'api','idea'),(11,'api','milestone'),(13,'api','notification'),(12,'api','team'),(6,'api','user'),(14,'api','vote'),(3,'auth','group'),(2,'auth','permission'),(4,'contenttypes','contenttype'),(5,'sessions','session');
+/*!40000 ALTER TABLE `django_content_type` ENABLE KEYS */;
+
+--
+-- Table structure for table `django_migrations`
+--
+
+DROP TABLE IF EXISTS `django_migrations`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `django_migrations` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `app` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `applied` datetime(6) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `django_migrations`
+--
+
+/*!40000 ALTER TABLE `django_migrations` DISABLE KEYS */;
+INSERT INTO `django_migrations` VALUES (1,'contenttypes','0001_initial','2024-12-16 19:20:29.930566'),(2,'contenttypes','0002_remove_content_type_name','2024-12-16 19:20:29.983287'),(3,'auth','0001_initial','2024-12-16 19:20:30.182256'),(4,'auth','0002_alter_permission_name_max_length','2024-12-16 19:20:30.227667'),(5,'auth','0003_alter_user_email_max_length','2024-12-16 19:20:30.248557'),(6,'auth','0004_alter_user_username_opts','2024-12-16 19:20:30.267649'),(7,'auth','0005_alter_user_last_login_null','2024-12-16 19:20:30.291420'),(8,'auth','0006_require_contenttypes_0002','2024-12-16 19:20:30.294976'),(9,'auth','0007_alter_validators_add_error_messages','2024-12-16 19:20:30.315349'),(10,'auth','0008_alter_user_username_max_length','2024-12-16 19:20:30.332547'),(11,'auth','0009_alter_user_last_name_max_length','2024-12-16 19:20:30.360351'),(12,'auth','0010_alter_group_name_max_length','2024-12-16 19:20:30.390687'),(13,'auth','0011_update_proxy_permissions','2024-12-16 19:20:30.409831'),(14,'auth','0012_alter_user_first_name_max_length','2024-12-16 19:20:30.431043'),(15,'api','0001_initial','2024-12-16 19:20:31.757400'),(16,'admin','0001_initial','2024-12-16 19:20:31.933715'),(17,'admin','0002_logentry_remove_auto_add','2024-12-16 19:20:32.010460'),(18,'admin','0003_logentry_add_action_flag_choices','2024-12-16 19:20:32.090667'),(19,'sessions','0001_initial','2024-12-16 19:20:32.136892'),(20,'api','0002_idea_is_cross_regional_idea_required_expertise_and_more','2024-12-16 19:49:56.923050');
+/*!40000 ALTER TABLE `django_migrations` ENABLE KEYS */;
+
+--
+-- Table structure for table `django_session`
+--
+
+DROP TABLE IF EXISTS `django_session`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `django_session` (
+  `session_key` varchar(40) NOT NULL,
+  `session_data` longtext NOT NULL,
+  `expire_date` datetime(6) NOT NULL,
+  PRIMARY KEY (`session_key`),
+  KEY `django_session_expire_date_a5c62663` (`expire_date`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `django_session`
+--
+
+/*!40000 ALTER TABLE `django_session` DISABLE KEYS */;
+INSERT INTO `django_session` VALUES ('3rs6nwxch2nfixti9oa0amlcsbi8as4p','.eJxVjDsOwjAQRO_iGlnrrD8xJX3OYNnrDQ4gR4qTCnF3EikFFNPMezNvEeK2lrA1XsKUxVUocfntUqQn1wPkR6z3WdJc12VK8lDkSZsc5syv2-n-HZTYyr6OaFH71KFPCg0AZHQIlvZky6Pymg3YTpE12hF4bXvTj4TKsfPIJD5fofQ2Uw:1tNYOY:p-h93W6pk1WSAyuw1e9V7q_0tKFG4wTETflQ34dKZ48','2024-12-31 14:17:54.693542'),('dndmj4jql27l16u70ikj07mfqlmrbb51','.eJxVjDsOwyAQBe9CHSE-BpuU6X0GtMuug5MIJGNXUe4eIblI2jcz7y0iHHuOR-MtriSuwovL74aQnlw6oAeUe5Wpln1bUXZFnrTJuRK_bqf7d5Ch5V47WJSCacBgvRkncklbm4bFKe29ZtJJk_IqMJF1o9Fo2DADkrIYGMTnC9sROBc:1tTUgG:YWhaUMtWbCWn_bUjvApeSvVK4IfXq56pGzPR5BZYbyk','2025-01-16 23:32:44.719554'),('e8w8e1l4fjbf8ufclsht2ljk56i09fc9','.eJxVjDsOwjAQRO_iGlnrrD8xJX3OYNnrDQ4gR4qTCnF3EikFFNPMezNvEeK2lrA1XsKUxVUocfntUqQn1wPkR6z3WdJc12VK8lDkSZsc5syv2-n-HZTYyr6OaFH71KFPCg0AZHQIlvZky6Pymg3YTpE12hF4bXvTj4TKsfPIJD5fofQ2Uw:1tNQfg:-1FJiQNU-2t8Tk1ZokgVr6aCAWX9Y755xg3luu9jeNc','2024-12-31 06:03:04.936334'),('g61ok60um79g84zzvjs8j3xc74c6s092','.eJxVjDsOwyAQBe9CHSE-BpuU6X0GtMuug5MIJGNXUe4eIblI2jcz7y0iHHuOR-MtriSuwovL74aQnlw6oAeUe5Wpln1bUXZFnrTJuRK_bqf7d5Ch5V47WJSCacBgvRkncklbm4bFKe29ZtJJk_IqMJF1o9Fo2DADkrIYGMTnC9sROBc:1tTUL3:moqnNGphxOB-paaFE5fOrEQgMjfpqANg_weSihEm9Nk','2025-01-16 23:10:49.247848'),('m747p3qrpwizb3oskp0elnpt6v28z320','.eJxVjDsOwyAQBe9CHSE-BpuU6X0GtMuug5MIJGNXUe4eIblI2jcz7y0iHHuOR-MtriSuwovL74aQnlw6oAeUe5Wpln1bUXZFnrTJuRK_bqf7d5Ch5V47WJSCacBgvRkncklbm4bFKe29ZtJJk_IqMJF1o9Fo2DADkrIYGMTnC9sROBc:1tTUbQ:gzFnbJRwKFISDiAbkfEcHoXRjkUsA_VbDxRTWJiThuI','2025-01-16 23:27:44.367750'),('r97o81riw0c13n0cj8xtbl2zbu1g2om5','.eJxVjDsOwyAQBe9CHSE-BpuU6X0GtMuug5MIJGNXUe4eIblI2jcz7y0iHHuOR-MtriSuwovL74aQnlw6oAeUe5Wpln1bUXZFnrTJuRK_bqf7d5Ch5V47WJSCacBgvRkncklbm4bFKe29ZtJJk_IqMJF1o9Fo2DADkrIYGMTnC9sROBc:1tTUE1:HAcWk053KZypE8w1_oe4oklAy1LMCLlbcICxj7m1tFo','2025-01-16 23:03:33.660954'),('st99i462lxztliqfskqfpx8hhuizkdg4','.eJxVjDEOwjAMRe-SGUUmjXFgZO8ZIid2SAG1UtNOiLtDpQ6w_vfef5nI61Lj2nSOg5iL8ebwuyXODx03IHceb5PN07jMQ7KbYnfabD-JPq-7-3dQudVvTajEeEIFyUVVEcCzdspOkggURyGc1VFHwTsMeiSX2HehAEImBPP-AP1wN9g:1tNZPN:EYonpfGoxtjKSPLCi-Sldn5wV2-haVgqh57noegToKs','2024-12-31 15:22:49.188928');
+/*!40000 ALTER TABLE `django_session` ENABLE KEYS */;
+
+--
+-- Table structure for table `users`
+--
+
+DROP TABLE IF EXISTS `users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `users` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `username` varchar(150) NOT NULL,
+  `password` varchar(128) NOT NULL,
+  `email` varchar(254) NOT NULL,
+  `role` varchar(50) DEFAULT NULL,
+  `expertise` text DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `username` (`username`),
+  UNIQUE KEY `email` (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `users`
+--
+
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+
+--
+-- Dumping routines for database 'ims_connect'
+--
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2025-01-04  6:18:38
