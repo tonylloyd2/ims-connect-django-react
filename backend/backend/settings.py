@@ -182,4 +182,5 @@ CSRF_TRUSTED_ORIGINS = [
     "http://127.0.0.1:5500",
     "https://ddf5e9f9ee250565a151b52ac17620da.serveo.net",
     "https://ffe2c703139dff0fa0bb2a30a2e49211.serveo.net",# Serveo domain
+    "http://ims-connect-app.com", #frontend domain
 ]
