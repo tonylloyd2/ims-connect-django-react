@@ -41,3 +41,4 @@ wcwidth
 gunicorn
 whitenoise
 mysqlclient
+django
