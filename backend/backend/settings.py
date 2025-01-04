@@ -32,15 +32,15 @@ DEBUG = config('DEBUG', default=True, cast=bool)
 
 ALLOWED_HOSTS = ['*']  # Update this in production
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",
-    "http://ims-connect-app.com",# React Vite default port
-    "http://127.0.0.1:5173",
-    "http://localhost:5500",  # Live Server port
-    "http://127.0.0.1:5500",
-    "https://ddf5e9f9ee250565a151b52ac17620da.serveo.net",
-    "https://ffe2c703139dff0fa0bb2a30a2e49211.serveo.net",# Serveo domain
-]
+# CORS_ALLOWED_ORIGINS = [
+#     "http://localhost:5173",
+#     "http://ims-connect-app.com",# React Vite default port
+#     "http://127.0.0.1:5173",
+#     "http://localhost:5500",  # Live Server port
+#     "http://127.0.0.1:5500",
+#     "https://ddf5e9f9ee250565a151b52ac17620da.serveo.net",
+#     "https://ffe2c703139dff0fa0bb2a30a2e49211.serveo.net",# Serveo domain
+# ]
 
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:5173",  # React Vite default port
@@ -53,7 +53,7 @@ CSRF_TRUSTED_ORIGINS = [
 
 CORS_ALLOW_CREDENTIALS = True
 # Application definition
-
+CORS_ALLOW_ALL_ORIGINS = True
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
