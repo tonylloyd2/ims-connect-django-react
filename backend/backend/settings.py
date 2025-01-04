@@ -107,8 +107,8 @@ ASGI_APPLICATION = "backend.asgi.application"
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.getenv('DB_NAME', 'ims_connect'),
-        'USER': os.getenv('DB_USER', 'root'),
+        'NAME': os.getenv('DB_NAME', 'imsc_ims_connect'),
+        'USER': os.getenv('DB_USER', 'imsc_root'),
         'PASSWORD': os.getenv('DB_PASSWORD', '1212'),
         'HOST': os.getenv('DB_HOST', 'localhost'),
         'PORT': os.getenv('DB_PORT', '3306'),
