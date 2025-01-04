@@ -9,7 +9,7 @@ click-didyoumean
 click-plugins
 click-repl
 cron-descriptor
-Django
+Django>=3.2,<4.0
 django-celery-beat
 django-celery-results
 django-cors-headers
@@ -41,3 +41,4 @@ wcwidth
 gunicorn
 whitenoise
 mysqlclient
+cryptography
