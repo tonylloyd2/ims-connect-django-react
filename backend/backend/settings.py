@@ -20,7 +20,6 @@ pymysql.install_as_MySQLdb()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
@@ -32,28 +31,7 @@ DEBUG = config('DEBUG', default=True, cast=bool)
 
 ALLOWED_HOSTS = ['*']  # Update this in production
 
-# CORS_ALLOWED_ORIGINS = [
-#     "http://localhost:5173",
-#     "http://ims-connect-app.com",# React Vite default port
-#     "http://127.0.0.1:5173",
-#     "http://localhost:5500",  # Live Server port
-#     "http://127.0.0.1:5500",
-#     "https://ddf5e9f9ee250565a151b52ac17620da.serveo.net",
-#     "https://ffe2c703139dff0fa0bb2a30a2e49211.serveo.net",# Serveo domain
-# ]
-
-CSRF_TRUSTED_ORIGINS = [
-    "http://localhost:5173",  # React Vite default port
-    "http://127.0.0.1:5173",
-    "http://localhost:5500",  # Live Server port
-    "http://127.0.0.1:5500",
-    "https://ddf5e9f9ee250565a151b52ac17620da.serveo.net",
-    "https://ffe2c703139dff0fa0bb2a30a2e49211.serveo.net",# Serveo domain
-]
-
-CORS_ALLOW_CREDENTIALS = True
 # Application definition
-CORS_ALLOW_ALL_ORIGINS = True
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -79,7 +57,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-        'whitenoise.middleware.WhiteNoiseMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = "backend.urls"
@@ -189,19 +167,19 @@ CHANNEL_LAYERS = {
     }
 }
 
-import os
-from pathlib import Path
-
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
-
-# Static files (CSS, JavaScript, Images)
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
 # CORS settings
 CORS_ALLOW_ALL_ORIGINS = True  # For development only, configure properly for production
 CORS_ALLOW_CREDENTIALS = True
 
 # Configure WhiteNoise to serve static files
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# CSRF trusted origins
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:5173",  # React Vite default port
+    "http://127.0.0.1:5173",
+    "http://localhost:5500",  # Live Server port
+    "http://127.0.0.1:5500",
+    "https://ddf5e9f9ee250565a151b52ac17620da.serveo.net",
+    "https://ffe2c703139dff0fa0bb2a30a2e49211.serveo.net",# Serveo domain
+]
