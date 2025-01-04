@@ -1,7 +1,7 @@
 // Main JavaScript file
 
 // API Configuration
-const API_BASE_URL = 'http://localhost:8000'; // Removed /api since it's already in the URL paths
+const API_BASE_URL = 'https://147.93.136.124:8801'; // Removed /api since it's already in the URL paths
 
 // Configure Axios defaults
 axios.defaults.baseURL = API_BASE_URL;
